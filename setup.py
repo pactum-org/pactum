@@ -12,6 +12,7 @@ from setuptools import find_packages, setup, Command
 from shutil import rmtree
 
 NAME = 'pactum'
+VERSION = '0.0.1'
 DESCRIPTION = 'Create API specifications and documentation using Python'
 URL = 'https://github.com/osantana/pactum'
 EMAIL = 'pactum@osantana.me'
@@ -22,10 +23,6 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 with codecs.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
-
-about = {}
-with open(os.path.join(here, NAME, '__version__.py')) as f:
-    exec(f.read(), about)
 
 
 class PublishCommand(Command):
@@ -64,7 +61,7 @@ class PublishCommand(Command):
 # Where the magic happens:
 setup(
     name=NAME,
-    version=about['__version__'],
+    version=VERSION,
     description=DESCRIPTION,
     long_description=long_description,
     author=AUTHOR,
