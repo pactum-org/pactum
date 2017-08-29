@@ -96,4 +96,6 @@ setup(
     cmdclass={
         'publish': PublishCommand,
     },
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
 )
