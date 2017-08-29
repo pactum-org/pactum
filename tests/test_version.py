@@ -1,7 +1,7 @@
 import pytest
 
-from contract.exceptions import SpecificationWarning
-from contract.version import Version, VersionSelector
+from pactum.exceptions import SpecificationWarning
+from pactum.version import Version, VersionSelector
 
 
 def test_basic_version(route):

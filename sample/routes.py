@@ -1,3 +1,3 @@
-from contract.route import Route
+from pactum.route import Route
 
 product = Route("/product")

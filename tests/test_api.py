@@ -1,8 +1,8 @@
 import pytest
 
-from contract.api import API
-from contract.exceptions import SpecificationWarning
-from contract.version import VersionSelector
+from pactum.api import API
+from pactum.exceptions import SpecificationWarning
+from pactum.version import VersionSelector
 
 
 def test_base_api(version):

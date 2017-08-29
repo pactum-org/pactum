@@ -1,5 +1,5 @@
-from contract.api import API
-from contract.version import VersionSelector
+from pactum.api import API
+from pactum.version import VersionSelector
 
 from . import versions
 

@@ -1,7 +1,7 @@
 import warnings
 
-from contract.base import Element
-from contract.exceptions import SpecificationWarning
+from pactum.base import Element
+from pactum.exceptions import SpecificationWarning
 
 
 class API(Element):

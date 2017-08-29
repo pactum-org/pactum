@@ -1,4 +1,4 @@
-from contract.version import Version
+from pactum.version import Version
 
 from . import routes
 

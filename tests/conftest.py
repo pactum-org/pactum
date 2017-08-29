@@ -1,7 +1,7 @@
 import pytest
 
-from contract.route import Route
-from contract.version import Version, VersionSelector
+from pactum.route import Route
+from pactum.version import Version, VersionSelector
 
 
 @pytest.fixture

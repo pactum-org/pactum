@@ -1,4 +1,4 @@
-from contract.base import Element
+from pactum.base import Element
 
 
 class Route(Element):

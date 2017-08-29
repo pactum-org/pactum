@@ -1,4 +1,4 @@
-contract
-========
+pactum
+======
 
-Create API specifications (contract) and documentation using Python.
+Create API specifications and documentation using Python.

@@ -11,10 +11,10 @@ import sys
 from setuptools import find_packages, setup, Command
 from shutil import rmtree
 
-NAME = 'contract'
-DESCRIPTION = 'Create API specifications (contract) and documentation using Python'
-URL = 'https://github.com/osantana/contract'
-EMAIL = 'contract@osantana.me'
+NAME = 'pactum'
+DESCRIPTION = 'Create API specifications and documentation using Python'
+URL = 'https://github.com/osantana/pactum'
+EMAIL = 'pactum@osantana.me'
 AUTHOR = 'Osvaldo Santana Neto'
 REQUIRED = []
 
@@ -88,10 +88,9 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy'
+        'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Testing',
-
     ],
     # $ setup.py publish support.
     cmdclass={
