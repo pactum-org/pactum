@@ -26,6 +26,7 @@ jobs:
           command: |
             . venv/bin/activate
             python setup.py test
+            coveralls
       - store_artifacts:
           path: test-reports
           destination: test-reports
