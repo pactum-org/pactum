@@ -1,4 +1,5 @@
 pytest
 pytest-runner
+pytest-cov
 twine
 coveralls
