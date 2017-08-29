@@ -12,20 +12,17 @@ class VersionSelector(IntFlag):
 
 
 class Version(Element):
-    def __init__(self, name, selector, endpoints,
-                 path=None, accept=None, custom_header=None, **kwargs):
+    def __init__(self, *, name, selector_option, routes, **kwargs):
         super().__init__(**kwargs)
         self.name = name
-        self.endpoints = endpoints
-        self.selector = selector
-        self.path = path if selector == VersionSelector.PATH else None
-        self.accept = accept if selector == VersionSelector.ACCEPT_HEADER else None
-        self.custom_header = custom_header if selector == VersionSelector.CUSTOM_HEADER else None
+        self.selector_option = selector_option
+        self.routes = routes
 
     def validate(self):
-        if self.custom_header and not self.custom_header[0].lower().startswith("X-"):
+        if not isinstance(self.selector_option, str) and not self.selector_option[0].lower().startswith("x-"):
             warnings.warn("Custom HTTP header shoud starts with 'X-'", SpecificationWarning)
 
-        # noinspection PyTypeChecker
-        if len([s for s in VersionSelector if (self.selector & s) != s]) < len(VersionSelector):
-            warnings.warn("Multiple selectors cause ambiguous behaviours", SpecificationWarning)
+        if not self.routes:
+            warnings.warn("Version does not specifies at least one route", SpecificationWarning)
+
+        return super().validate()

@@ -1,8 +1,11 @@
-from contract.version import Version, VersionSelector
+from contract.version import Version
+
+from . import routes
 
 v1 = Version(
     name="1.0",
-    selector=VersionSelector.PATH,
-    path="v1",
-    endpoints=(),
+    selector_option="/v1",
+    routes=(
+        routes.product,
+    ),
 )
