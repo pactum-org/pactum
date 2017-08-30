@@ -1,10 +1,10 @@
-from pactum.version import Version
+from pactum.version import Version, version_selector
 
 from . import routes
 
 v1 = Version(
     name="1.0",
-    selector_option="/v1",
+    selector=version_selector("/v1"),
     routes=(
         routes.product,
     ),
