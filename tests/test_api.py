@@ -2,13 +2,12 @@ import pytest
 
 from pactum.api import API
 from pactum.exceptions import SpecificationWarning
-from pactum.version import VersionSelector
+from version import Version, version_selector
 
 
 def test_base_api(version):
     api = API(
         name="Test API",
-        version_selector=VersionSelector.PATH,
         versions=(
             version,
         ),
@@ -19,11 +18,31 @@ def test_base_api(version):
     assert api.validate()
 
 
+def test_warning_api_with_different_selectors(version, route):
+    other_version = Version(
+        name="2.0",
+        selector=version_selector("application/vnd.test.v2+json"),
+        routes=(
+            route,
+        ),
+    )
+
+    api = API(
+        name="Test API",
+        versions=(
+            version,
+            other_version,
+        )
+    )
+
+    with pytest.warns(SpecificationWarning):
+        api.validate()
+
+
 def test_warning_api_with_no_version():
     with pytest.warns(SpecificationWarning):
         api = API(
             name="Test API",
-            version_selector=VersionSelector.PATH,
             versions=(),
         )
         api.validate()
@@ -32,4 +51,4 @@ def test_warning_api_with_no_version():
 # noinspection PyArgumentList
 def test_error_positional_args(version):
     with pytest.raises(TypeError):
-        API("Name", VersionSelector.PATH, (version,))
+        API("Name", (version,))

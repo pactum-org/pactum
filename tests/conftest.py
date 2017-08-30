@@ -1,7 +1,7 @@
 import pytest
 
 from pactum.route import Route
-from pactum.version import Version, VersionSelector
+from pactum.version import Version, version_selector
 
 
 @pytest.fixture
@@ -13,9 +13,8 @@ def route():
 def version(route):
     return Version(
         name="v0",
-        selector_option="/v0",
+        selector=version_selector("/v0"),
         routes=(
             route,
         ),
     )
-

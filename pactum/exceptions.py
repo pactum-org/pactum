@@ -10,5 +10,9 @@ class SpecificationWarning(PactumWarning):
     pass
 
 
-class InvalidVersionSelector(PactumError):
+class SpecificationError(PactumError):
+    pass
+
+
+class InvalidVersionSelector(SpecificationError):
     pass
