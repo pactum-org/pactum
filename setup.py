@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-# Note: To use the 'upload' functionality of this file, you must:
-#   $ pip install twine
 
 import codecs
 import os
@@ -58,7 +55,6 @@ class PublishCommand(Command):
         sys.exit()
 
 
-# Where the magic happens:
 setup(
     name=NAME,
     version=VERSION,
@@ -67,7 +63,7 @@ setup(
     author=AUTHOR,
     author_email=EMAIL,
     url=URL,
-    packages=find_packages(exclude=('tests',)),
+    packages=find_packages(),
     # entry_points={
     #     'console_scripts': ['mycli=mymodule:cli'],
     # },
@@ -75,8 +71,6 @@ setup(
     include_package_data=True,
     license='GPLv3',
     classifiers=[
-        # Trove classifiers
-        # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 1 - Planning',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
@@ -89,7 +83,6 @@ setup(
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Testing',
     ],
-    # $ setup.py publish support.
     cmdclass={
         'publish': PublishCommand,
     },

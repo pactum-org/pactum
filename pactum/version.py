@@ -73,7 +73,7 @@ def version_selector(selector):
 
 
 class Version(Element):
-    def __init__(self, *, name, selector, routes, **kwargs):
+    def __init__(self, *, name=None, selector=None, routes=None, **kwargs):
         super().__init__(**kwargs)
         self.name = name
         self.selector = selector

@@ -1,10 +1,11 @@
 from pactum.api import API
+from samples.basic.versions import FirstVersion
 
-from . import versions
 
-api = API(
-    name="Sample API",
-    versions=(
-        versions.v1,
-    ),
-)
+class SampleAPI(API):
+    name = "Sample API"
+    versions = [
+        FirstVersion(),
+    ]
+
+api = SampleAPI()
