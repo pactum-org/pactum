@@ -1,5 +1,6 @@
 import pytest
 
+from pactum.api import API
 from pactum.routes import Route
 from pactum.version import Version, version_selector
 
@@ -18,3 +19,12 @@ def version(route):
             route,
         ),
     )
+
+
+@pytest.fixture
+def api():
+    api = API(
+        name="Test API",
+        versions=[],
+    )
+    return api
