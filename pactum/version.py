@@ -39,7 +39,7 @@ class AcceptHeaderVersionSelector(VersionSelector):
             warnings.warn("It's recommended to use 'application' MIME type", SpecificationWarning)
 
         if not subtype.startswith("vnd."):
-            warnings.warn("Vendor-specific MIME subtypes should starts with 'vnd.'", SpecificationWarning)
+            warnings.warn("Vendor-specific MIME subtypes should start with 'vnd.'", SpecificationWarning)
 
         return True
 
