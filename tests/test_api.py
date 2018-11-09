@@ -47,3 +47,14 @@ def test_api_class_definition_with_one_version(version):
 def test_api_add_version(api, version):
     api.append(version)
     assert len(api.versions) == 1
+
+
+def test_prefer_parameter_to_class_definition(version):
+    class TestAPI(API):
+        name = "Test API"
+        versions = []
+
+    api = TestAPI(name="Test API by parameter", versions=[version])
+
+    assert len(api.versions) == 1
+    assert api.name == "Test API by parameter"
