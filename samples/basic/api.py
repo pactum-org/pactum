@@ -3,8 +3,8 @@ from samples.basic.versions import FirstVersion
 
 
 api = API(
-    name = "Sample API",
-    versions = [
+    name="Sample API",
+    versions=[
         FirstVersion(),
     ],
 )
