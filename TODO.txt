@@ -1,0 +1,41 @@
+class GetOrders(Method):
+    method = 'GET'
+    plural = True
+
+get_orders = GetOrders()
+
+route = Route('/orders/', OrderResource(), actions=[get_orders, CreateOrder()])
+
+
+
+
+class Resource:
+    ...
+
+
+class ResourceList(Resource):
+    resource_type = None
+
+
+class Order(Resource):
+    code = charfield
+
+
+class OrderList(ResourceList):
+    resource_type = Order
+
+get = Method("GET")
+
+class PostMethod(Method):
+    name = "POST"
+
+post = PostMethod()
+
+Route("/orders/", OrderList(), methods=[get])
+Route("/orders/", Order(), methods=[post])
+Route("/orders/{code}/", Order(), methods=[get, put, patch, delete])
+
+
+process = Method("POST", )
+
+Route("/createOrder", Order(), methods=[process])

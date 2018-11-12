@@ -1,22 +1,23 @@
 import pytest
 
-from pactum import API, Route, Version
-from pactum.version import version_selector
+from pactum.api import API
+from pactum.resource import Resource
+from pactum.route import Route
+from pactum.version import Version
 
 
 @pytest.fixture
 def route():
-    return Route(path="/resource", methods=[])
+    return Route('/test/')
 
 
 @pytest.fixture
 def version(route):
     return Version(
         name="v0",
-        selector=version_selector("/v0"),
-        routes=(
+        routes=[
             route,
-        ),
+        ],
     )
 
 
@@ -27,3 +28,8 @@ def api():
         versions=[],
     )
     return api
+
+
+@pytest.fixture
+def resource():
+    return Resource()

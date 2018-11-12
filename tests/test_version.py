@@ -1,103 +1,74 @@
 import pytest
 
-from pactum.exceptions import SpecificationWarning, SpecificationError
-from pactum.version import Version, PathVersionSelector, VersionSelector, AcceptHeaderVersionSelector, \
-    CustomHeaderVersionSelector, version_selector
+from pactum.version import Version
+from pactum.resource import Resource
 
 
-def test_basic_version(route):
+def test_basic_version_with_routes():
     version = Version(
-        name="v1",
-        selector=PathVersionSelector("/v1"),
-        routes=(
-            route,
-        )
+        name="1.0",
+        routes=[],
     )
-    version.validate()
+
+    assert version.name == "1.0"
+    assert len(version.routes) == 0
 
 
-def test_warning_version_no_route():
-    with pytest.warns(SpecificationWarning):
-        version = Version(
-            name="v1",
-            selector=PathVersionSelector("/v1"),
-            routes=(),
-        )
-        version.validate()
+def test_basic_version_with_resources():
+    version = Version(
+        name="1.0",
+        resources=[],
+    )
+
+    assert version.name == "1.0"
+    assert len(version.resources) == 0
 
 
-# noinspection PyArgumentList
-def test_error_positional_args(route):
+def test_fail_version_with_routes_and_resources():
     with pytest.raises(TypeError):
-        Version("Name", PathVersionSelector("/v1"), (route,))
+        Version(name="v0", routes=[], resources=[])
 
 
-# Version Selector
-def test_error_validate_abstract_class():
-    with pytest.raises(NotImplementedError):
-        VersionSelector("").validate()
+def test_fail_if_no_routes_and_no_version():
+    with pytest.raises(TypeError):
+        Version(name="v1")
 
 
-def test_basic_path_version_selector():
-    vs = PathVersionSelector("/v1")
-    assert vs.selector == "/v1"
-    assert vs.validate()
+def test_append_route(route):
+    version = Version(
+        name="1.0",
+        routes=[],
+    )
+
+    version.append(route)
+    assert len(version.routes) == 1
 
 
-def test_error_path_version_selector_not_started_slash():
-    with pytest.raises(SpecificationError):
-        PathVersionSelector("v1").validate()
+def test_append_resources():
+    version = Version(
+        name="1.0",
+        resources=[],
+    )
+
+    version.append(Resource())
+    assert len(version.resources) == 1
 
 
-def test_basic_accept_version_selector():
-    vs = AcceptHeaderVersionSelector("application/vnd.test.v2+json")
-    assert vs.selector == "application/vnd.test.v2+json"
-    assert vs.validate()
+def test_append_route_fails_if_there_are_resources(route):
+    version = Version(
+        name="1.0",
+        resources=[],
+    )
+
+    with pytest.raises(TypeError):
+        version.append(route)
 
 
-def test_error_invalid_accept_version_selector():
-    with pytest.raises(SpecificationError):
-        AcceptHeaderVersionSelector("invalid").validate()
+def test_append_resource_fails_if_there_are_routes():
+    version = Version(
+        name="1.0",
+        routes=[],
+    )
 
-    with pytest.raises(SpecificationError):
-        AcceptHeaderVersionSelector("application/vnd.UPPERCASE.v2+json").validate()
-
-
-def test_warning_bad_mime_type_accept_version_selector():
-    with pytest.warns(SpecificationWarning):
-        AcceptHeaderVersionSelector("text/vnd.test.v2+json").validate()
-
-    with pytest.warns(SpecificationWarning):
-        AcceptHeaderVersionSelector("application/test.subtype+json").validate()
-
-
-def test_basic_custom_header_version_selector():
-    vs = CustomHeaderVersionSelector("X-API-Version: 1.0")
-    assert vs.selector == "X-API-Version: 1.0"
-    assert vs.validate()
-
-
-def test_basic_custom_header_version_selector_tuple():
-    vs = CustomHeaderVersionSelector("X-API-Version", "1.0")
-    assert vs.selector == "X-API-Version: 1.0"
-
-
-def test_error_invalid_custom_header_version_selector():
-    with pytest.raises(SpecificationError):
-        CustomHeaderVersionSelector("Invalid:header").validate()
-
-
-def test_warning_bad_custom_header_version_selector():
-    with pytest.warns(SpecificationWarning):
-        CustomHeaderVersionSelector("API-Version: 1.0").validate()
-
-
-def test_version_selector_helper():
-    assert isinstance(version_selector("/v1"), PathVersionSelector)
-    assert isinstance(version_selector("application/vnd.test.v2+json"), AcceptHeaderVersionSelector)
-    assert isinstance(version_selector("X-API-Version: 1.0"), CustomHeaderVersionSelector)
-
-
-def test_error_version_selector_helper():
-    with pytest.raises(SpecificationError):
-        version_selector("invalid")
+    with pytest.raises(TypeError):
+        version.append(Resource())
