@@ -1,8 +1,7 @@
 import pytest
 
-from pactum.api import API
-from pactum.routes import Route
-from pactum.version import Version, version_selector
+from pactum import API, Route, Version
+from pactum.version import version_selector
 
 
 @pytest.fixture
