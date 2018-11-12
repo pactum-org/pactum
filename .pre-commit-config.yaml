@@ -18,7 +18,7 @@ repos:
     - id: detect-private-key
     - id: forbid-new-submodules
     - id: flake8
-      args: ['--exclude=docs/*,*migrations*', '--ignore=E501', 'per-file-ignores="pactum/__init__.py:F401"']
+      args: ['--exclude=docs/*,*migrations*', '--ignore=E501']
 
 - repo: local
   hooks:

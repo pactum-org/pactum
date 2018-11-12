@@ -1,2 +1,2 @@
-from .api import API
-from .version import Version
+from .api import API  # NOQA
+from .version import Version  # NOQA
