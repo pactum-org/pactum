@@ -107,3 +107,17 @@ def test_append_resource_fails_if_there_are_routes():
 
     with pytest.raises(TypeError):
         version.append(Resource())
+
+
+def test_prefer_parameter_to_class_definition(route):
+    class TestVersion(Version):
+        name = "Test Version"
+        routes = []
+
+    version = TestVersion(
+        name="Test Version by parameter",
+        routes=[route]
+    )
+
+    assert len(version.routes) == 1
+    assert version.name == "Test Version by parameter"
