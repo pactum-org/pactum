@@ -4,3 +4,4 @@ pytest-cov
 twine
 coveralls
 bumpversion
+pre-commit
