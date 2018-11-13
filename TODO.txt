@@ -33,7 +33,7 @@ post = PostMethod()
 
 Route("/orders/", OrderList(), methods=[get])
 Route("/orders/", Order(), methods=[post])
-Route("/orders/{code}/", Order(), methods=[get, put, patch, delete])
+Route("/orders/{order.code}/prices/{key}", Price(), methods=[get, put, patch, delete])
 
 
 process = Method("POST", )
@@ -57,3 +57,38 @@ validate_implementation(OrderResource)
     for field in OrderResource.fields:
         if field.type != OrderResource.__implements__[field.name].type:
             raise
+
+
+class PriceResource(Resource):
+    fields = [
+        DecimalField(name="price"),
+        DecimalField(name="offer"),
+        PositiveIntegerField(name="key"),
+    ]
+
+    def get_route(self):
+        return route
+
+
+price_list = ResourceList(resource=PriceResource())
+
+class Product(Resource):
+    fields = [
+        ResourceField(name="prices", resource=price_list)
+    ]
+
+product = {
+    ...
+    prices: [
+        {price: 20.00, offer: 19.99},
+        {price: 10.00, offer: 9.99},
+    ]
+}
+
+product = {
+    ...
+    prices: [
+        "https://...@@@www/prices/12345",
+        "https://...@@@www/prices/123456",
+    ]
+}
