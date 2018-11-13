@@ -1,5 +1,5 @@
 from pactum.route import Route
-from pactum.resource import Resource
+from pactum.resources import Resource
 
 
 def test_basic_route(resource):

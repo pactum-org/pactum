@@ -1,7 +1,7 @@
 import pytest
 
 from pactum.api import API
-from pactum.resource import Resource
+from pactum.resources import Resource
 from pactum.route import Route
 from pactum.version import Version
 

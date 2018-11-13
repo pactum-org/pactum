@@ -1,4 +1,4 @@
-from .resource import Resource
+from .resources import Resource
 from .route import Route
 
 

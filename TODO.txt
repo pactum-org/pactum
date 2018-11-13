@@ -39,3 +39,21 @@ Route("/orders/{code}/", Order(), methods=[get, put, patch, delete])
 process = Method("POST", )
 
 Route("/createOrder", Order(), methods=[process])
+
+
+
+class PacturOrderResource:
+    fields = [
+        string_field(name="code"),
+    ]
+
+class OrderResource(WebFrameworkResource):
+    __implements__ = PactumOrderResource
+
+    code = integer_field()
+
+
+validate_implementation(OrderResource)
+    for field in OrderResource.fields:
+        if field.type != OrderResource.__implements__[field.name].type:
+            raise
