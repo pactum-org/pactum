@@ -1,3 +1,5 @@
+import pytest
+
 from pactum.route import Route
 from pactum.resources import Resource
 
@@ -38,3 +40,8 @@ def test_prefer_parameter_to_class_definition():
     assert len(route.methods) == 1
     assert route.path == "/test_by_param/"
     assert isinstance(route.resource, Resource)
+
+
+def test_fail_route_with_no_resource():
+    with pytest.raises(TypeError):
+        Route(path="/")
