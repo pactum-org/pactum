@@ -1,6 +1,8 @@
 pactum
 ======
 
+The Pythonista API-specs notebook.
+
 .. image:: https://circleci.com/gh/olist/pactum.svg?style=svg
     :target: https://circleci.com/gh/olist/pactum
 .. image:: https://coveralls.io/repos/github/osantana/pactum/badge.svg?branch=master
