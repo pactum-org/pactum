@@ -42,6 +42,11 @@ def test_prefer_parameter_to_class_definition():
     assert isinstance(route.resource, Resource)
 
 
+def test_fail_route_with_no_path(resource):
+    with pytest.raises(TypeError):
+        Route(resource=resource)
+
+
 def test_fail_route_with_no_resource():
     with pytest.raises(TypeError):
         Route(path="/")

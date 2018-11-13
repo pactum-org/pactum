@@ -1,7 +1,10 @@
 class Route:
     def __init__(self, path=None, resource=None, methods=None):
         if path is None:
-            path = getattr(self, 'path', '')
+            try:
+                path = getattr(self, 'path')
+            except AttributeError:
+                raise TypeError("Missing path specification.")
         self.path = path
 
         if resource is None:

@@ -1,7 +1,7 @@
 import pytest
 
 from pactum.fields import Field
-from pactum.resources import Resource
+from pactum.resources import Resource, ListResource
 
 
 def test_basic_resource():
@@ -84,3 +84,13 @@ def test_subclassing_add_fields():
 
     assert isinstance(resource['my_other_field'], Field)
     assert resource['my_other_field'].name == 'my_other_field'
+
+
+def test_basic_resource_list(resource):
+    list_resource = ListResource(resource=resource)
+
+    assert list_resource.name == "ListResource"
+    assert list_resource.resource == resource
+
+    assert hasattr(list_resource, 'fields') is False
+    assert hasattr(list_resource, 'behaviors') is False
