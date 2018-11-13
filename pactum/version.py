@@ -8,6 +8,14 @@ class Version:
                 routes = getattr(self, 'routes')
             except AttributeError:
                 raise TypeError("Version must have routes.")
+        single_actions = []
+        for route in routes:
+            for method in route.methods:
+                single_actions.append((route.path, method.verb, route.resource))
+
+        if len(set(single_actions)) < len(single_actions):
+            raise AttributeError('Ambiguous methods.')
+
         self.routes = routes
 
     def append(self, route):

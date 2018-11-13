@@ -15,5 +15,5 @@ class Route:
         self.resource = resource
 
         if methods is None:
-            methods = getattr(self, 'methods', None)
+            methods = getattr(self, 'methods', [])
         self.methods = methods

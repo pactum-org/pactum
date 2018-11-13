@@ -1,5 +1,7 @@
 import pytest
 
+from pactum.methods import Method
+from pactum.route import Route
 from pactum.version import Version
 
 
@@ -59,3 +61,18 @@ def test_prefer_parameter_to_class_definition(route):
 
     assert len(version.routes) == 1
     assert version.name == "Test Version by parameter"
+
+
+def test_validate_ambiguous_routes_on_version_init(resource):
+    method1 = Method(verb='GET')
+    method2 = Method(verb='POST')
+    method3 = Method(verb='GET')
+    route1 = Route('/route/', methods=[method1, method2], resource=resource)
+    route2 = Route('/route/', methods=[method3], resource=resource)
+
+    class TestVersion(Version):
+        name = "v1"
+        routes = [route1, route2]
+
+    with pytest.raises(AttributeError):
+        TestVersion()
