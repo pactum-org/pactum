@@ -1,7 +1,6 @@
 import pytest
 
 from pactum.version import Version
-from pactum.resources import Resource
 
 
 def test_basic_version_with_routes():

@@ -54,6 +54,7 @@ def test_access_fields_by_key():
     assert resource['my_field'].name == 'my_field'
     assert resource['my_other_field'].name == 'my_other_field'
 
+
 def test_duplicate_field_names_raises_error():
     class MyResource(Resource):
         fields = [
@@ -63,6 +64,7 @@ def test_duplicate_field_names_raises_error():
 
     with pytest.raises(AttributeError):
         MyResource()
+
 
 def test_subclassing_add_fields():
     class MyResource(Resource):

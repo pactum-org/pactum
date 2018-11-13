@@ -1,5 +1,3 @@
-
-
 class Resource:
     def __init__(self, name=None, fields=None, behaviors=None):
         self._mapfields = {}

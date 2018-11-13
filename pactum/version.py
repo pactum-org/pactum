@@ -1,7 +1,3 @@
-from .resources import Resource
-from .route import Route
-
-
 class Version:
     def __init__(self, name=None, routes=None):
         if name is None:
