@@ -8,7 +8,7 @@ from pactum.version import Version
 
 @pytest.fixture
 def route(resource):
-    return Route(path='/test/', resource=resource)
+    return Route(path='/test/')
 
 
 @pytest.fixture

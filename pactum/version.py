@@ -11,7 +11,7 @@ class Version:
         single_actions = []
         for route in routes:
             for method in route.methods:
-                single_actions.append((route.path, method.verb, route.resource))
+                single_actions.append((route.path, method.verb))
 
         if len(set(single_actions)) < len(single_actions):
             raise AttributeError('Ambiguous methods.')
