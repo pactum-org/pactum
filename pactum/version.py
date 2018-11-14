@@ -17,6 +17,3 @@ class Version:
             raise AttributeError('Ambiguous methods.')
 
         self.routes = routes
-
-    def append(self, route):
-        self.routes.append(route)

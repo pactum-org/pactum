@@ -39,16 +39,6 @@ def test_class_def_fails_if_no_routes():
         V1()
 
 
-def test_append_route(route):
-    version = Version(
-        name="1.0",
-        routes=[],
-    )
-
-    version.append(route)
-    assert len(version.routes) == 1
-
-
 def test_prefer_parameter_to_class_definition(route):
     class TestVersion(Version):
         name = "Test Version"
