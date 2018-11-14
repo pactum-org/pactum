@@ -28,6 +28,13 @@ class Resource(BaseResource):
 
 
 class ListResource(BaseResource):
-    def __init__(self, name=None, resource=None):
-        super().__init__(name)
+    def __init__(self, resource=None, **kwargs):
+        super().__init__(**kwargs)
+
+        if resource is None:
+            try:
+                resource = getattr(self, "resource")
+            except AttributeError:
+                raise TypeError("Missing resource specification.")
+
         self.resource = resource

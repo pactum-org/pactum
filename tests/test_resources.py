@@ -1,7 +1,7 @@
 import pytest
 
 from pactum.fields import Field
-from pactum.resources import Resource, ListResource
+from pactum.resources import ListResource, Resource
 
 
 def test_basic_resource():
@@ -86,7 +86,7 @@ def test_subclassing_add_fields():
     assert resource['my_other_field'].name == 'my_other_field'
 
 
-def test_basic_resource_list(resource):
+def test_basic_list_resource(resource):
     list_resource = ListResource(resource=resource)
 
     assert list_resource.name == "ListResource"
@@ -94,3 +94,24 @@ def test_basic_resource_list(resource):
 
     assert hasattr(list_resource, 'fields') is False
     assert hasattr(list_resource, 'behaviors') is False
+
+
+def test_basic_list_resource_class_definition(resource):
+    base_resource = resource
+
+    class MyListResource(ListResource):
+        name = "ListResource"
+        resource = base_resource
+
+    list_resource = MyListResource()
+
+    assert list_resource.name == "ListResource"
+    assert list_resource.resource == resource
+
+    assert hasattr(list_resource, 'fields') is False
+    assert hasattr(list_resource, 'behaviors') is False
+
+
+def test_fail_list_resource_with_no_resource():
+    with pytest.raises(TypeError):
+        ListResource(name="ListResource")
