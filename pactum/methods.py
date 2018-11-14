@@ -12,5 +12,5 @@ class Method:
             try:
                 responses = getattr(self, 'responses')
             except AttributeError:
-                raise TypeError('Missing responses.')
+                raise TypeError('Missing responses specification.')
         self.responses = responses

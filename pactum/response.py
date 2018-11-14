@@ -12,5 +12,5 @@ class Response:
             try:
                 status = getattr(self, 'status')
             except AttributeError:
-                raise TypeError('Missing status.')
+                raise TypeError('Missing status specification.')
         self.status = status
