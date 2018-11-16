@@ -1,7 +1,10 @@
 class Request:
     def __init__(self, verb=None, payload=None, headers=None):
         if verb is None:
-            verb = getattr(self, 'verb', '')
+            try:
+                verb = getattr(self, 'verb')
+            except AttributeError:
+                raise TypeError('Missing request verb.')
         self.verb = verb
 
         if payload is None:
