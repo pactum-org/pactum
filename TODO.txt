@@ -92,3 +92,50 @@ product = {
         "https://...@@@www/prices/123456",
     ]
 }
+
+
+class MyDictVisitor:
+    def __init__(self):
+        self.api = {}
+        self.last_version = None
+        self.last_route = None
+        self.last_action = None
+
+    def visitAPI(self, element):
+        self.api = {
+            "name": element.name,
+            "versions": [],
+        }
+
+    def visitVersion(self, element):
+        self.last_version = self.api["versions"]
+
+        self.last_version.append({
+            name=element.name,
+            "routes": [],
+        })
+
+    def visitRoute(self, element):
+        self.last_route = self.last_version["routes"]
+
+        self.last_route.append({
+            "path": element.path,
+            "actions": [],
+        })
+
+
+    def visitActions(self, element):
+        self.last_action = self.last_route["actions"]
+
+        self.last_action.append({
+            "request": (element.request.verb, element.request.payload),
+            "responses": [],
+        })
+
+
+
+def json_export(api):
+   visitor = MyDictVisitor()
+   api.accept(visitor)
+   d = visitor.get_result()
+   return json.dumps(d)
