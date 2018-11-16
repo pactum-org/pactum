@@ -48,8 +48,7 @@ class OrderListRoute(Route):
     path = "/orders"
     methods = [
         Method(
-            verb=verbs.GET,
-            request=Request(),
+            request=Request(verb=verbs.GET),
             responses=[
                 Response(
                     status=200,

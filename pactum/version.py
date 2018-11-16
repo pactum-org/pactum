@@ -3,6 +3,7 @@ class Version:
         if name is None:
             name = getattr(self, 'name', '')
         self.name = name
+
         if routes is None:
             try:
                 routes = getattr(self, 'routes')
@@ -12,9 +13,9 @@ class Version:
         actions = set()
         for route in routes:
             for method in route.methods:
-                action = (route.path, method.verb)
+                action = (route.path, method.request.verb)
                 if action in actions:
-                    raise AttributeError('Ambiguous route and method definition.')
+                    raise AttributeError('Ambiguous route and method request definition.')
                 actions.add(action)
 
         self.routes = routes
