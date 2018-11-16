@@ -1,6 +1,6 @@
 from pactum import fields, verbs
+from pactum.action import Action
 from pactum.api import API
-from pactum.methods import Method
 from pactum.request import Request
 from pactum.resources import ListResource, Resource
 from pactum.response import Response
@@ -47,9 +47,8 @@ class OrderListResource(ListResource):
 class OrderListRoute(Route):
     path = "/orders"
     methods = [
-        Method(
-            verb=verbs.GET,
-            request=Request(),
+        Action(
+            request=Request(verb=verbs.GET),
             responses=[
                 Response(
                     status=200,

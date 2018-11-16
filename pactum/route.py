@@ -1,5 +1,5 @@
 class Route:
-    def __init__(self, path=None, methods=None):
+    def __init__(self, path=None, actions=None):
         if path is None:
             try:
                 path = getattr(self, 'path')
@@ -7,6 +7,6 @@ class Route:
                 raise TypeError("Missing path specification.")
         self.path = path
 
-        if methods is None:
-            methods = getattr(self, 'methods', [])
-        self.methods = methods
+        if actions is None:
+            actions = getattr(self, 'actions', [])
+        self.actions = actions
