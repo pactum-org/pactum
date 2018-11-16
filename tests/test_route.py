@@ -21,14 +21,14 @@ def test_route_class_definition():
     assert len(route.actions) == 0
 
 
-def test_prefer_parameter_to_class_definition():
+def test_prefer_parameter_to_class_definition(action):
     class TestRoute(Route):
         path = '/test/'
         actions = []
 
     route = TestRoute(
         path="/test_by_param/",
-        actions=['GET']
+        actions=[action]
     )
 
     assert len(route.actions) == 1
