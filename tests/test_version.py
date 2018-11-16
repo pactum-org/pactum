@@ -54,9 +54,9 @@ def test_prefer_parameter_to_class_definition(route):
 
 
 def test_validate_ambiguous_routes_on_version_init(resource):
-    method1 = Method(verb='GET', responses=[])
-    method2 = Method(verb='POST', responses=[])
-    method3 = Method(verb='GET', responses=[])
+    method1 = Method(responses=[])
+    method2 = Method(responses=[])
+    method3 = Method(responses=[])
     route1 = Route('/route/', methods=[method1, method2])
     route2 = Route('/route/', methods=[method3])
 

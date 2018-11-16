@@ -1,9 +1,5 @@
 class Method:
-    def __init__(self, verb=None, request=None, responses=None):
-        if verb is None:
-            verb = getattr(self, 'verb', '')
-        self.verb = verb
-
+    def __init__(self, request=None, responses=None):
         if request is None:
             request = getattr(self, 'request', None)
         self.request = request
