@@ -1,4 +1,4 @@
-class Method:
+class Action:
     def __init__(self, request=None, responses=None):
         if request is None:
             request = getattr(self, 'request', None)
