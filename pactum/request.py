@@ -4,7 +4,7 @@ class Request:
             try:
                 verb = getattr(self, 'verb')
             except AttributeError:
-                raise TypeError('Missing request verb.')
+                raise TypeError('Missing request verb specification.')
         self.verb = verb
 
         if payload is None:
