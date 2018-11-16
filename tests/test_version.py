@@ -1,9 +1,9 @@
 import pytest
 
+from pactum import verbs
 from pactum.action import Action
 from pactum.route import Route
 from pactum.request import Request
-from pactum.verbs import GET, POST
 from pactum.version import Version
 
 
@@ -56,9 +56,9 @@ def test_prefer_parameter_to_class_definition(route):
 
 
 def test_validate_ambiguous_routes_on_version_init(resource):
-    action1 = Action(Request(verb=GET), responses=[])
-    action2 = Action(Request(verb=POST), responses=[])
-    action3 = Action(Request(verb=GET), responses=[])
+    action1 = Action(Request(verb=verbs.GET), responses=[])
+    action2 = Action(Request(verb=verbs.POST), responses=[])
+    action3 = Action(Request(verb=verbs.GET), responses=[])
     route1 = Route('/route/', actions=[action1, action2])
     route2 = Route('/route/', actions=[action3])
 
