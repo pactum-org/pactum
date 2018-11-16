@@ -1,11 +1,5 @@
+import pactum
 from pactum import fields, verbs
-from pactum.action import Action
-from pactum.api import API
-from pactum.request import Request
-from pactum.resources import ListResource, Resource
-from pactum.response import Response
-from pactum.route import Route
-from pactum.version import Version
 
 
 class SKUField(fields.Field):
@@ -16,7 +10,7 @@ class MoneyField(fields.DecimalField):
     precision = 2
 
 
-class ItemResource(Resource):
+class ItemResource(pactum.Resource):
     fields = [
         fields.IntegerField(name="id"),
         fields.PositiveIntegerField(name="quantity"),
@@ -27,11 +21,11 @@ class ItemResource(Resource):
     ]
 
 
-class ItemListResource(ListResource):
+class ItemListResource(pactum.ListResource):
     resource = ItemResource()
 
 
-class OrderResource(Resource):
+class OrderResource(pactum.Resource):
     fields = [
         fields.StringField(name="code"),
         fields.TimestampField(name="created_at"),
@@ -40,17 +34,17 @@ class OrderResource(Resource):
     ]
 
 
-class OrderListResource(ListResource):
+class OrderListResource(pactum.ListResource):
     resource = OrderResource()
 
 
-class OrderListRoute(Route):
+class OrderListRoute(pactum.Route):
     path = "/orders"
     methods = [
-        Action(
-            request=Request(verb=verbs.GET),
+        pactum.Action(
+            request=pactum.Request(verb=verbs.GET),
             responses=[
-                Response(
+                pactum.Response(
                     status=200,
                     body=OrderListResource())
             ],
@@ -58,10 +52,10 @@ class OrderListRoute(Route):
     ]
 
 
-api = API(
+api = pactum.API(
     name="Orders API",
     versions=[
-        Version(
+        pactum.Version(
             name="v1",
             routes=[
                 OrderListRoute(),
