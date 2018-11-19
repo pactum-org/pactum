@@ -52,7 +52,7 @@ def test_api_add_version(api, version):
 def test_prefer_parameter_to_class_definition(version):
     class TestAPI(API):
         name = "Test API"
-        versions = []
+        versions = [version, version]
 
     api = TestAPI(name="Test API by parameter", versions=[version])
 
