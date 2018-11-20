@@ -11,7 +11,7 @@ class Resource(BaseResource):
         self._mapfields = {}
 
         if fields is None:
-            fields = getattr(self, "fields", [])
+            fields = getattr(self.__class__, "fields", [])
 
         for field in fields:
             if self._mapfields.get(field.name):

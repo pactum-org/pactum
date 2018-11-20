@@ -7,6 +7,13 @@ class Route:
                 raise TypeError("Missing path specification.")
         self.path = path
 
+        self.actions = []
         if actions is None:
             actions = getattr(self, 'actions', [])
-        self.actions = actions
+
+        for action in actions:
+            self.append(action)
+
+    def append(self, child):
+        self.actions.append(child)
+        child.parent = self

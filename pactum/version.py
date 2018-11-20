@@ -4,9 +4,10 @@ class Version:
             name = getattr(self, 'name', '')
         self.name = name
 
+        self.routes = []
         if routes is None:
             try:
-                routes = getattr(self, 'routes')
+                routes = getattr(self.__class__, 'routes')
             except AttributeError:
                 raise TypeError("Version must have routes.")
 
@@ -17,5 +18,8 @@ class Version:
                 if action in actions:
                     raise AttributeError('Ambiguous route and action request definition.')
                 actions.add(action)
+            self.append(route)
 
-        self.routes = routes
+    def append(self, child):
+        self.routes.append(child)
+        child.parent = self
