@@ -8,6 +8,7 @@ class Action(Element):
         if request is None:
             request = getattr(self.__class__, 'request', None)
         self.request = request
+        self.request.parent = self
 
         self.responses = []
         if responses is None:
