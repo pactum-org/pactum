@@ -14,12 +14,13 @@ def test_base_api():
 def test_base_api_class_definition(version):
     class TestAPI(API):
         name = "Test API"
-        versions = []
+        versions = [version]
 
     api = TestAPI()
 
     assert api.name == "Test API"
-    assert len(api.versions) == 0
+    assert len(api.versions) == 1
+    assert api.versions[0].parent == api
 
 
 def test_api_with_one_version(version):
@@ -31,6 +32,7 @@ def test_api_with_one_version(version):
     )
 
     assert len(api.versions) == 1
+    assert api.versions[0].parent == api
 
 
 def test_api_class_definition_with_one_version(version):
@@ -42,11 +44,13 @@ def test_api_class_definition_with_one_version(version):
 
     api = TestAPI()
     assert len(api.versions) == 1
+    assert api.versions[0].parent == api
 
 
 def test_api_add_version(api, version):
     api.append(version)
     assert len(api.versions) == 1
+    assert api.versions[0].parent == api
 
 
 def test_prefer_parameter_to_class_definition(version):
@@ -58,3 +62,4 @@ def test_prefer_parameter_to_class_definition(version):
 
     assert len(api.versions) == 1
     assert api.name == "Test API by parameter"
+    assert api.versions[0].parent == api

@@ -33,6 +33,7 @@ def test_prefer_parameter_to_class_definition(action):
 
     assert len(route.actions) == 1
     assert route.path == "/test_by_param/"
+    assert route.actions[0].parent == route
 
 
 def test_fail_route_with_no_path(resource):

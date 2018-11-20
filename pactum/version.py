@@ -1,10 +1,15 @@
-class Version:
+from .base import Element
+
+
+class Version(Element):
+    _children_name = 'routes'
+    _required_attrs = ['routes']
+
     def __init__(self, name=None, routes=None):
         if name is None:
             name = getattr(self, 'name', '')
         self.name = name
 
-        self.routes = []
         if routes is None:
             try:
                 routes = getattr(self.__class__, 'routes')
@@ -16,10 +21,7 @@ class Version:
             for action in route.actions:
                 action = (route.path, action.request.verb)
                 if action in actions:
-                    raise AttributeError('Ambiguous route and action request definition.')
+                    raise AttributeError('Ambiguous route and action request specification.')
                 actions.add(action)
-            self.append(route)
 
-    def append(self, child):
-        self.routes.append(child)
-        child.parent = self
+        self._initialize_children(locals())

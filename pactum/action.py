@@ -1,4 +1,9 @@
-class Action:
+from .base import Element
+
+
+class Action(Element):
+    _children_name = 'responses'
+
     def __init__(self, request=None, responses=None):
         if request is None:
             request = getattr(self.__class__, 'request', None)
@@ -11,9 +16,4 @@ class Action:
             except AttributeError:
                 raise TypeError('Missing responses specification.')
 
-        for response in responses:
-            self.append(response)
-
-    def append(self, child):
-        self.responses.append(child)
-        child.parent = self
+        self._initialize_children(locals())

@@ -53,6 +53,7 @@ def test_prefer_parameter_to_class_definition(route):
 
     assert len(version.routes) == 1
     assert version.name == "Test Version by parameter"
+    assert version.routes[0].parent == version
 
 
 def test_validate_ambiguous_routes_on_version_init(resource):

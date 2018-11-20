@@ -10,14 +10,15 @@ def test_basic_action():
     assert test_action.responses == []
 
 
-def test_basic_action_class_def():
+def test_basic_action_class_def(response):
     class TestAction(Action):
         request = None
-        responses = []
+        responses = [response]
 
     test_action = TestAction()
     assert test_action.request is None
-    assert test_action.responses == []
+    assert len(test_action.responses) == 1
+    assert test_action.responses[0].parent == test_action
 
 
 def test_action_must_have_responses():

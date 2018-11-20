@@ -1,4 +1,9 @@
-class Route:
+from .base import Element
+
+
+class Route(Element):
+    _children_name = 'actions'
+
     def __init__(self, path=None, actions=None):
         if path is None:
             try:
@@ -7,13 +12,4 @@ class Route:
                 raise TypeError("Missing path specification.")
         self.path = path
 
-        self.actions = []
-        if actions is None:
-            actions = getattr(self, 'actions', [])
-
-        for action in actions:
-            self.append(action)
-
-    def append(self, child):
-        self.actions.append(child)
-        child.parent = self
+        self._initialize_children(locals())
