@@ -11,3 +11,8 @@ class API(Element):
         self.name = name
 
         self._initialize_children(locals())
+
+    def accept(self, visitor):
+        for version in self.versions:
+            version.accept(visitor)
+        visitor.visitAPI(self)

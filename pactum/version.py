@@ -24,3 +24,8 @@ class Version(Element):
                 actions.add(action)
 
         self._initialize_children(locals())
+
+    def accept(self, visitor):
+        for route in self.routes:
+            route.accept(visitor)
+        visitor.visitVersion(self)

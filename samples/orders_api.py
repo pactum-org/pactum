@@ -40,7 +40,7 @@ class OrderListResource(pactum.ListResource):
 
 class OrderListRoute(pactum.Route):
     path = "/orders"
-    methods = [
+    actions = [
         pactum.Action(
             request=pactum.Request(verb=verbs.GET),
             responses=[

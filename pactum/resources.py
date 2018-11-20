@@ -26,6 +26,11 @@ class Resource(BaseResource):
     def __getitem__(self, item):
         return self._mapfields[item]
 
+    def accept(self, visitor):
+        for field in self.fields:
+            field.accept(visitor)
+        visitor.visitResource(self)
+
 
 class ListResource(BaseResource):
     def __init__(self, resource=None, **kwargs):
@@ -38,3 +43,7 @@ class ListResource(BaseResource):
                 raise TypeError("Missing resource specification.")
 
         self.resource = resource
+
+    def accept(self, visitor):
+        self.resource.accept(visitor)
+        visitor.visitResource(self)

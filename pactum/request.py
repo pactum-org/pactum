@@ -14,3 +14,8 @@ class Request:
         if headers is None:
             headers = getattr(self, 'headers', [])
         self.headers = headers
+
+    def accept(self, visitor):
+        if self.payload is not None:
+            self.payload.accept(visitor)
+        visitor.visitRequest(self)

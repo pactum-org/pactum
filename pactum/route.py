@@ -13,3 +13,8 @@ class Route(Element):
         self.path = path
 
         self._initialize_children(locals())
+
+    def accept(self, visitor):
+        for action in self.actions:
+            action.accept(visitor)
+        visitor.visitRoute(self)

@@ -14,3 +14,8 @@ class Response:
             except AttributeError:
                 raise TypeError('Missing status specification.')
         self.status = status
+
+    def accept(self, visitor):
+        if self.body is not None:
+            self.body.accept(visitor)
+        visitor.visitResponse(self)

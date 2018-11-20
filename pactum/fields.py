@@ -9,6 +9,9 @@ class Field:
             type = getattr(self, "type", self.__class__)
         self.type = type
 
+    def accept(self, visitor):
+        visitor.visitField(self)
+
 
 class IntegerField(Field):
     def __init__(self, min_value=None, max_value=None, **kwargs):

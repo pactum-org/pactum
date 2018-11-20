@@ -17,3 +17,10 @@ class Action(Element):
                 raise TypeError('Missing responses specification.')
 
         self._initialize_children(locals())
+
+    def accept(self, visitor):
+        for response in self.responses:
+            response.accept(visitor)
+
+        self.request.accept(visitor)
+        visitor.visitAction(self)
