@@ -17,6 +17,7 @@ class Resource(BaseResource):
             if self._mapfields.get(field.name):
                 raise AttributeError("Duplicate field names")
             self._mapfields[field.name] = field
+            field.parent = self
         self.fields = fields
 
         if behaviors is None:

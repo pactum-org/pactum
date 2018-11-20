@@ -54,6 +54,9 @@ def test_access_fields_by_key():
     assert resource['my_field'].name == 'my_field'
     assert resource['my_other_field'].name == 'my_other_field'
 
+    assert resource.fields[0].parent == resource
+    assert resource.fields[1].parent == resource
+
 
 def test_duplicate_field_names_raises_error():
     class MyResource(Resource):
