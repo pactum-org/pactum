@@ -13,6 +13,6 @@ class API(Element):
         self._initialize_children(locals())
 
     def accept(self, visitor):
+        visitor.visitAPI(self)
         for version in self.versions:
             version.accept(visitor)
-        visitor.visitAPI(self)

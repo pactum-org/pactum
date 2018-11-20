@@ -26,6 +26,6 @@ class Version(Element):
         self._initialize_children(locals())
 
     def accept(self, visitor):
+        visitor.visitVersion(self)
         for route in self.routes:
             route.accept(visitor)
-        visitor.visitVersion(self)
