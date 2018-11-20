@@ -3,7 +3,6 @@ from .base import Element
 
 class Version(Element):
     _children_name = 'routes'
-    _required_attrs = ['routes']
 
     def __init__(self, name=None, routes=None):
         if name is None:
