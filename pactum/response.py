@@ -1,5 +1,9 @@
 class Response:
-    def __init__(self, status=None, body=None, headers=None):
+    def __init__(self, status=None, body=None, headers=None, description=None):
+        if description is None:
+            description = getattr(self, 'description', self.__doc__ or '')
+        self.description = description.strip()
+
         if body is None:
             body = getattr(self, 'body', None)
         self.body = body

@@ -30,3 +30,20 @@ def test_response_is_invalid_without_status():
 
     with pytest.raises(TypeError):
         TestResponse()
+
+
+def test_response_class_definition_with_doc_description(version):
+    class TestResponse(Response):
+        """
+        Response for tests.
+        """
+        body = None
+        headers = []
+        status = 200
+
+    response = TestResponse()
+
+    assert response.body is None
+    assert response.headers == []
+    assert response.status == 200
+    assert response.description == "Response for tests."
