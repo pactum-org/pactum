@@ -9,7 +9,7 @@ def test_base_api():
     )
 
     assert api.name == "Test API"
-    assert api.description == "API for tests."
+    assert api.__doc__ == "API for tests."
     assert len(api.versions) == 0
 
 
@@ -22,7 +22,7 @@ def test_base_api_class_definition(version):
     api = TestAPI()
 
     assert api.name == "Test API"
-    assert api.description == "API for tests."
+    assert api.__doc__ == "API for tests."
     assert len(api.versions) == 1
     assert api.versions[0].parent == api
 
@@ -38,7 +38,7 @@ def test_api_class_definition_with_doc_description(version):
     api = TestAPI()
 
     assert api.name == "Test API"
-    assert api.description == "API for tests."
+    assert api.__doc__ == "API for tests."
     assert len(api.versions) == 1
     assert api.versions[0].parent == api
 

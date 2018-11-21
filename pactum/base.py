@@ -1,4 +1,13 @@
 class Element:
+    def __init__(self, description=None, extensions=None, **kwargs):
+        if description is None:
+            description = getattr(self, 'description', self.__doc__ or '')
+        self.__doc__ = description.strip()
+
+        if extensions is None:
+            extensions = getattr(self, 'extensions', {})
+        self.extensions = extensions
+
     def _initialize_children(self, attrs):
         setattr(self, self._children_name, [])
 

@@ -10,7 +10,7 @@ def test_basic_action(request, response):
     assert test_action.responses == [response]
     assert test_action.responses[0].parent == test_action
     assert test_action.request.parent == test_action
-    assert test_action.description == "Test action"
+    assert test_action.__doc__ == "Test action"
 
 
 def test_basic_action_class_def(response):
@@ -23,7 +23,7 @@ def test_basic_action_class_def(response):
     assert test_action.request is None
     assert len(test_action.responses) == 1
     assert test_action.responses[0].parent == test_action
-    assert test_action.description == "Test Action"
+    assert test_action.__doc__ == "Test Action"
 
 
 def test_basic_action_class_def_with_doc_description(response):
@@ -36,7 +36,7 @@ def test_basic_action_class_def_with_doc_description(response):
     assert test_action.request is None
     assert len(test_action.responses) == 1
     assert test_action.responses[0].parent == test_action
-    assert test_action.description == "Test Action."
+    assert test_action.__doc__ == "Test Action."
 
 
 def test_action_must_have_responses():

@@ -48,6 +48,7 @@ class OrderListRoute(pactum.Route):
                     status=200,
                     body=OrderListResource())
             ],
+            description='List Orders'
         )
     ]
 

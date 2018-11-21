@@ -4,10 +4,8 @@ from .base import Element
 class Action(Element):
     _children_name = 'responses'
 
-    def __init__(self, request=None, responses=None, description=None):
-        if description is None:
-            description = getattr(self, 'description', self.__doc__ or '')
-        self.description = description.strip()
+    def __init__(self, request=None, responses=None, **kwargs):
+        super().__init__(**kwargs)
 
         if request is None:
             request = getattr(self.__class__, 'request', None)
