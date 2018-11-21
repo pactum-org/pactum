@@ -10,7 +10,7 @@ class Field:
         self.type = type
 
     def accept(self, visitor):
-        visitor.visitField(self)
+        visitor.visit_field(self)
 
 
 class IntegerField(Field):

@@ -16,6 +16,6 @@ class Request:
         self.headers = headers
 
     def accept(self, visitor):
-        visitor.visitRequest(self)
+        visitor.visit_request(self)
         if self.payload is not None:
             self.payload.accept(visitor)

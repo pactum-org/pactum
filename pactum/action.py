@@ -25,7 +25,7 @@ class Action(Element):
         self._initialize_children(locals())
 
     def accept(self, visitor):
-        visitor.visitAction(self)
+        visitor.visit_action(self)
         self.request.accept(visitor)
         for response in self.responses:
             response.accept(visitor)

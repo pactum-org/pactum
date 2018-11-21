@@ -1,24 +1,24 @@
 class BaseVisitor:
-    def visitAPI(self, api):
+    def visit_api(self, api):
         print(f'Visiting API: {api.name}')
 
-    def visitVersion(self, version):
-        print(f'Visiting Version {version.name}')
+    def visit_version(self, version):
+        print(f'Visiting Version {version.name} for {version.parent.name}')
 
-    def visitRoute(self, route):
+    def visit_route(self, route):
         print(f'Visiting Route {route.path}')
 
-    def visitRequest(self, request):
+    def visit_request(self, request):
         print(f'Visiting Request {request.verb}')
 
-    def visitResponse(self, response):
+    def visit_response(self, response):
         print(f'Visiting Response {response.status}, {[x for x in response.headers]}')
 
-    def visitAction(self, action):
+    def visit_action(self, action):
         print(f'Visition action')
 
-    def visitResource(self, resource):
+    def visit_resource(self, resource):
         print(f'Visiting Resource {resource.name}.')
 
-    def visitField(self, field):
+    def visit_field(self, field):
         print(f'Visiting Field {field.name}, {field.type}')

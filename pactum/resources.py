@@ -28,7 +28,7 @@ class Resource(BaseResource):
         return self._mapfields[item]
 
     def accept(self, visitor):
-        visitor.visitResource(self)
+        visitor.visit_resource(self)
         for field in self.fields:
             field.accept(visitor)
 

@@ -15,6 +15,6 @@ class Route(Element):
         self._initialize_children(locals())
 
     def accept(self, visitor):
-        visitor.visitRoute(self)
+        visitor.visit_route(self)
         for action in self.actions:
             action.accept(visitor)

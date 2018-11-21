@@ -20,6 +20,6 @@ class Response:
         self.status = status
 
     def accept(self, visitor):
+        visitor.visit_response(self)
         if self.body is not None:
             self.body.accept(visitor)
-        visitor.visitResponse(self)
