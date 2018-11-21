@@ -3,10 +3,11 @@ from pactum import fields, verbs
 
 
 class SKUField(fields.Field):
-    pass
+    extensions = {'openapi.type': 'string'}
 
 
 class MoneyField(fields.DecimalField):
+    extensions = {'openapi.type': 'float'}
     precision = 2
 
 
@@ -29,7 +30,7 @@ class OrderResource(pactum.Resource):
     fields = [
         fields.StringField(name="code"),
         fields.TimestampField(name="created_at"),
-        fields.ResourceField(name="items", resource=ItemListResource),
+        fields.ResourceField(name="items", resource=ItemListResource()),
         MoneyField(name="total"),
     ]
 
