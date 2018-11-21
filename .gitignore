@@ -43,3 +43,5 @@ docs/_build/
 .python-version
 .env
 .venv
+
+*.swp
