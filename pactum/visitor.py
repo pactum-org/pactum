@@ -22,3 +22,6 @@ class BaseVisitor:
 
     def visit_field(self, field):
         print(f'Visiting Field {field.name}, {field.type}')
+
+    def visit_list_resource(self, list_resource):
+        pass

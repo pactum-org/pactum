@@ -46,4 +46,5 @@ class ListResource(BaseResource):
         self.resource = resource
 
     def accept(self, visitor):
+        visitor.visit_list_resource(self)
         self.resource.accept(visitor)
