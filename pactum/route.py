@@ -4,7 +4,8 @@ from .base import Element
 class Route(Element):
     _children_name = 'actions'
 
-    def __init__(self, path=None, actions=None):
+    def __init__(self, path=None, actions=None, **kwargs):
+        super().__init__(**kwargs)
         if path is None:
             try:
                 path = getattr(self, 'path')
