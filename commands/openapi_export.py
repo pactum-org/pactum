@@ -3,7 +3,7 @@ import json
 
 import click
 import yaml
-from pactum.exporters.openapi import OpenAPIV3Visitor
+from pactum.exporters.openapi import OpenAPIV3Exporter
 
 
 def clean_dict(d):
@@ -21,7 +21,7 @@ def clean_dict(d):
 def openapi_export(spec_file, output_file, format):
     spec = importlib.machinery.SourceFileLoader('spec', spec_file).load_module()
     api = spec.api
-    visitor = OpenAPIV3Visitor()
+    visitor = OpenAPIV3Exporter()
     api.accept(visitor)
     result = clean_dict(visitor.result)
     if format == 'json':
