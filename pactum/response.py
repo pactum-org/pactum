@@ -1,4 +1,7 @@
-class Response:
+from .base import Element
+
+
+class Response(Element):
     def __init__(self, status=None, body=None, headers=None, **kwargs):
         super().__init__(**kwargs)
 
