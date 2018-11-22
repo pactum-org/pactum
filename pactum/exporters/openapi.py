@@ -13,7 +13,7 @@ class NotSpecified(Exception):
     pass
 
 
-class OpenAPIV3Visitor(BaseVisitor):
+class OpenAPIV3Exporter(BaseVisitor):
     '''
     Exporter based on OpenAPI specification version 3.0.1.
     https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md
