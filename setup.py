@@ -14,7 +14,7 @@ DESCRIPTION = 'Create API specifications and documentation using Python'
 URL = 'https://github.com/osantana/pactum'
 EMAIL = 'pactum@osantana.me'
 AUTHOR = 'Osvaldo Santana Neto'
-REQUIRED = []
+REQUIRED = ['Click', ]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -88,4 +88,9 @@ setup(
     },
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
+    py_modules=['commands.openapi_export'],
+    entry_points='''
+        [console_scripts]
+        pactum-openapi=commands.openapi_export:openapi_export
+    '''
 )
