@@ -73,7 +73,7 @@ class OpenAPIV3Exporter(BaseVisitor):
     def visit_request(self, request):
         payload = {}
         if request.payload:
-            payload = {'schema': {'$ref/': f'#/components/schemas/{request.payload.name}'}},
+            payload = {'schema': {'$ref': f'#/components/schemas/{request.payload.name}'}}
         self.result['paths'][request.parent.parent.path][request.verb.lower()]['requestBody'] = payload
 
     def visit_response(self, response):
