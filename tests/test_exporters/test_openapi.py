@@ -1,6 +1,10 @@
-from pactum import Action, API, Request, Route, Version, verbs
+import pytest
 from copy import copy
-from pactum.exporters.openapi import OpenAPIV3Exporter
+
+from pactum import Action, API, fields
+from pactum import ListResource, Resource, Response, Request, Route
+from pactum import Version, verbs
+from pactum.exporters.openapi import NotSpecified, OpenAPIV3Exporter
 
 
 def test_openapi_exporter_initialization():
@@ -81,3 +85,173 @@ def test_visit_action_populates_paths_verbs():
     assert parsed_action['callbacks'] == []
     assert parsed_action['security'] == {}
     assert parsed_action['servers'] == {}
+
+
+def test_visit_request_populates_requestBody_with_payload_reference(resource):
+
+    exporter = OpenAPIV3Exporter()
+    route = Route(path='/test-path/')
+    request = Request(verb=verbs.GET, payload=resource)
+    action = Action(request=request, responses=[])
+    action.parent = route
+
+    exporter.result['paths'] = {
+        '/test-path/': {'get': {}}
+    }
+
+    exporter.visit_request(request)
+
+    parsed_action = exporter.result['paths']['/test-path/']['get']
+    assert 'schema' in parsed_action['requestBody']
+    assert parsed_action['requestBody']['schema']['$ref'] == '#/components/schemas/Resource'
+
+
+def test_visit_response_appends_response_objects_to_path(resource):
+    exporter = OpenAPIV3Exporter()
+    route = Route(path='/test-path/')
+    request = Request(verb=verbs.GET)
+    response = Response(
+        status=200, description='Response for testing',
+        headers=[('content-type', 'application/json')],
+        body=resource
+    )
+    action = Action(
+        request=request, responses=[response]
+    )
+    action.parent = route
+
+    exporter.result['paths'] = {
+        '/test-path/': {'get': {'responses': {}}}
+    }
+
+    exporter.visit_response(response)
+
+    parsed_responses = exporter.result['paths']['/test-path/']['get']['responses']
+    assert '200' in parsed_responses
+    expected_schema = {'schema': {'$ref': '#/components/schemas/Resource'}}
+    assert parsed_responses['200']['content']['application/json'] == expected_schema
+    assert parsed_responses['200']['headers'] == {}
+
+
+def test_visit_resource_populates_schemas_component(resource):
+    exporter = OpenAPIV3Exporter()
+
+    exporter.visit_resource(resource)
+
+    assert 'Resource' in exporter.result['components']['schemas']
+    resource = exporter.result['components']['schemas']['Resource']
+    assert resource['type'] == 'object'
+    assert resource['required'] == []
+    assert resource['properties'] == {}
+
+
+def test_visit_resource_populates_required_fields():
+    class TestResource(Resource):
+        fields = [fields.IntegerField(name='code', required=True)]
+
+    exporter = OpenAPIV3Exporter()
+    exporter.visit_resource(TestResource())
+    assert 'TestResource' in exporter.result['components']['schemas']
+    schema = exporter.result['components']['schemas']['TestResource']
+    assert schema['type'] == 'object'
+    assert schema['required'] == ['code']
+    assert schema['properties'] == {}
+
+
+def test_visit_list_resource_populates_schemas_with_array_and_ref():
+    class TestResource(Resource):
+        pass
+
+    class TestListResource(ListResource):
+        resource = TestResource()
+
+    exporter = OpenAPIV3Exporter()
+    exporter.visit_list_resource(TestListResource())
+
+    assert 'TestListResource' in exporter.result['components']['schemas']
+
+    schema = exporter.result['components']['schemas']['TestListResource']
+    assert schema['type'] == 'array'
+    assert schema['items'] == {'$ref': '#/components/schemas/TestResource'}
+
+
+def test_visit_field_populates_component_schema_with_field_type():
+    code_field = fields.IntegerField(name='code', required=True)
+
+    class TestResource(Resource):
+        fields = [code_field]
+
+    TestResource()
+
+    exporter = OpenAPIV3Exporter()
+    exporter.result['components']['schemas'] = {
+        'TestResource': {'properties': {}}
+    }
+
+    exporter.visit_field(code_field)
+
+    properties = exporter.result['components']['schemas']['TestResource']['properties']
+    assert 'code' in properties
+    assert properties['code']['type'] == 'integer'
+
+
+def test_resource_field_visit_populated_with_resource_reference():
+    class OtherResource(Resource):
+        pass
+
+    resource_field = fields.ResourceField(name='other_resource', resource=OtherResource())
+
+    class TestResource(Resource):
+        fields = [resource_field]
+
+    TestResource()
+
+    exporter = OpenAPIV3Exporter()
+    exporter.result['components']['schemas'] = {
+        'TestResource': {'properties': {}}
+    }
+
+    exporter.visit_field(resource_field)
+
+    properties = exporter.result['components']['schemas']['TestResource']['properties']
+    assert 'other_resource' in properties
+    assert properties['other_resource'] == {'$ref': '#/components/schemas/OtherResource'}
+
+
+def test_custom_field_with_extension():
+    class CustomField(fields.Field):
+        extensions = {'openapi.type': 'custom'}
+    custom_field = CustomField(name='test_name')
+
+    class TestResource(Resource):
+        fields = [custom_field]
+
+    TestResource()
+
+    exporter = OpenAPIV3Exporter()
+    exporter.result['components']['schemas'] = {
+        'TestResource': {'properties': {}}
+    }
+    exporter.visit_field(custom_field)
+
+    properties = exporter.result['components']['schemas']['TestResource']['properties']
+    assert 'test_name' in properties
+    assert properties['test_name']['type'] == 'custom'
+
+
+def test_visit_for_custom_field_without_extension_raises_error():
+    class CustomField(fields.Field):
+        pass
+    custom_field = CustomField()
+
+    class TestResource(Resource):
+        fields = [custom_field]
+
+    TestResource()
+    exporter = OpenAPIV3Exporter()
+    exporter.result['components']['schemas'] = {
+        'TestResource': {'properties': {}}
+    }
+
+    with pytest.raises(NotSpecified):
+        exporter.visit_field(custom_field)
