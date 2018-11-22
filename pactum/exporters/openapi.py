@@ -18,10 +18,11 @@ class OpenAPIV3Exporter(BaseVisitor):
     Exporter based on OpenAPI specification version 3.0.1.
     https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md
     '''
+    OPENAPI_VERSION = '3.0.1'
 
-    def __init__(self, version=None):
+    def __init__(self):
         self.result = {
-            'openapi': '3.0.1',  # REQUIRED
+            'openapi': self.__class__.OPENAPI_VERSION,  # REQUIRED
             'servers': [],
             'info': {},  # REQUIRED
             'paths': {},  # REQUIRED
