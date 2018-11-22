@@ -80,12 +80,19 @@ class OpenAPIV3Exporter(BaseVisitor):
         method = self.result['paths'][response.parent.parent.path][response.parent.request.verb.lower()]
         parsed_response = {
             'description': response.__doc__,
-            'headers': response.headers,
             'links': {},
             'content': {}
         }
+
+        headers = dict(response.headers)
+        content_type = headers.pop('content-type', None)
+        parsed_response['headers'] = headers
+
+        if content_type is None:
+            content_type = '*/*'
+
         if response.body:
-            parsed_response['content']['*/*'] = {'schema': {'$ref': f'#/components/schemas/{response.body.name}'}}
+            parsed_response['content'][content_type] = {'schema': {'$ref': f'#/components/schemas/{response.body.name}'}}
         method['responses'][str(response.status)] = parsed_response
 
     def visit_resource(self, resource):
