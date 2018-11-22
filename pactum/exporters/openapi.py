@@ -32,34 +32,36 @@ class OpenAPIV3Exporter(BaseVisitor):
         }
 
     def visit_api(self, api):
+        last_version = api.versions[-1]
         self.result['info'] = {
             'title': api.name,  # REQUIRED
             'description': api.__doc__,
             'termsOfService': '',
             'contact': {},
             'license': {},
-            'version': api.versions[-1].name,  # REQUIRED
+            'version': last_version.name,  # REQUIRED
         }
+        api.versions = [last_version]  # Versions override to visitonly children for last version.
 
     def visit_version(self, version):
-        pass  # THIS SMELLS
+        pass
 
     def visit_route(self, route):
         self.result['paths'][route.path] = {
             'summary': '',
             'description': route.__doc__,
             'servers': [],
-            'parameters': '',
+            'parameters': {},
             # get, put, post, delete, options, head, patch and trace will be populated on children visits.
         }
 
     def visit_action(self, action):
         self.result['paths'][action.parent.path][action.request.verb.lower()] = {
             'description': action.__doc__,
-            'tags': [''],
+            'tags': [],
             'summary': action.__doc__,
-            'extrernalDocs': [],
-            'operationId': '',
+            'externalDocs': [],
+            'operationId': ''.join(x.title() for x in action.__doc__.split()),
             'parameters': [],
             'responses': {},  # will be populated on children visits.
             'callbacks': [],
