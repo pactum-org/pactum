@@ -97,9 +97,9 @@ class OpenAPIV3Exporter(BaseVisitor):
 
     def visit_resource(self, resource):
         self.result['components']['schemas'][resource.name] = {
-            "type": "object",
-            'required': [],
-            "properties": {}
+            'type': 'object',
+            'required': [field.name for field in resource.fields if field.required],
+            'properties': {}
         }
 
     def visit_list_resource(self, list_resource):
