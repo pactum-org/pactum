@@ -14,7 +14,7 @@ Pactum is easy to use, easy to extend and easy to contribute:
 ### Easy to use
 
 The only requirement to start writing an API specification with `pactum`
-is `pactum` itself and some knowledge of python.
+is `pactum` package itself and some knowledge of python.
 
 ```python
 import pactum
