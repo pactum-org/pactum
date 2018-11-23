@@ -35,7 +35,7 @@ Take a look at [pactum/exporters/openapi.py](pactum/exporters/openapi.py).
 
 Always keep this diagram in mind when defining your APIs.
 
-[![Architecture Diagram](Diagram.svg)]
+![Architecture Diagram](Diagram.svg)
 
 
 ### Tutorial
