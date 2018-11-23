@@ -1,17 +1,52 @@
-# pactum
+# Pactum
 ## The HTTP-API specification sketchbook for pythonistas
 
 [![Circle CI](https://circleci.com/gh/olist/pactum.svg?style=svg)](https://circleci.com/gh/olist/pactum)
-[![Coverage](https://coveralls.io/repos/github/olist/pactum/badge.svg?branch=master)](https://coveralls.io/github/olist/pactum?branch=master)
+
+```shell
+pip install pactum
+```
+
+With `Pactum` you can **specify** HTTP-API using pure python.
 
 
-With pactum you will be able to:
+Pactum is easy to use, easy to extend and easy to contribute:
 
-- Define HTTP-API specifications using pure python. (Easy to use)
-  The only requirement to start writing an API specification with pactum is
-  pactum itself and some knowledge of python.
+- Easy to use
+
+The only requirement to start writing an API specification with `pactum`
+is `pactum` itself and some knowledge of python.
+
+```python
+import pactum
+
+class MyAPI(API):
+    name = 'My API'
+    versions = [...]
+```
+
+- Easy to extend
+
+Using the [visitor pattern](http://wiki.c2.com/?VisitorPattern) you can create
+exporters and extensions for any format or service you want.
+
+Take a look at [pactum/exporters/openapi.py](pactum/exporters/openapi.py).
+
+- Easy to contribute
+
+Tooling created using idiomatic code. (Easy to contribute)
+
+```python
+
+```
 
 
+# Architecture
+
+We discovered a python-idiomatic architecture to define HTTP-APIs.
+
+
+# Tutorial
 ```python
 from pactum import Action, API, Resource, Response, Version
 from pactum import fields, verbs
@@ -57,38 +92,7 @@ class MyAPI(API):
     versions = [v1]
 
 api = MyAPI()
-
 ```
-
-- Tooling created using idiomatic code. (Easy to contribute)
-
-```python
-
-```
-
-- Plugable architecture for exporters (Easy-to-extend)
-```python
-from pactum.visitors import BaseVisitor
-class MyExporter(BaseVisitor):
-    def visit_api(self, api):
-        print(f'{api.name}')
-
-    def visit_version(self, version):
-       print(f'{version.name} for {version.parent.name}')
-```
-
-# What is pactum and why?
-
-Pactum is a tool to define HTTP API specifications that uses
-idiomatic python to define your APIs. With pactum you can define your
-HTTP API with pure python and export it to whatever format you want.
-
-# Architecture
-
-We discovered a python-idiomatic architecture to define HTTP-APIs.
-
-
-# Tutorial
 
 # Exporters
 Visitor design pattern. (http://wiki.c2.com/?VisitorPattern)
