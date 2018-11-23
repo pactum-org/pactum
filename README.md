@@ -9,10 +9,9 @@ pip install pactum
 
 With `Pactum` you can **specify** HTTP-API using pure python.
 
-
 Pactum is easy to use, easy to extend and easy to contribute:
 
-- Easy to use
+### Easy to use
 
 The only requirement to start writing an API specification with `pactum`
 is `pactum` itself and some knowledge of python.
@@ -25,28 +24,26 @@ class MyAPI(API):
     versions = [...]
 ```
 
-- Easy to extend
+### Easy to extend
 
 Using the [visitor pattern](http://wiki.c2.com/?VisitorPattern) you can create
 exporters and extensions for any format or service you want.
 
 Take a look at [pactum/exporters/openapi.py](pactum/exporters/openapi.py).
 
-- Easy to contribute
+### Architecture
 
-Tooling created using idiomatic code. (Easy to contribute)
+Always keep this diagram in mind when defining your APIs.
 
-```python
-
-```
+[![Architecture Diagram](Diagram.svg)]
 
 
-# Architecture
+### Tutorial
 
-We discovered a python-idiomatic architecture to define HTTP-APIs.
+Create a file called specs.py and start defining your API.
 
+You can define a `Resource` object for your API.
 
-# Tutorial
 ```python
 from pactum import Action, API, Resource, Response, Version
 from pactum import fields, verbs
@@ -58,44 +55,82 @@ class MyResource(Resource):
     ]
 resource = MyResource()
 
-class ErrorResource(Resource):
-    fields = [
-        fields.StringField(name='error', requried=False)
-    ]
-error_resource = ErrorResource()
+error_resource = Resource(
+    name = 'ErrorResource'
+    fields = [fields.StringField(name='error', required=False)]
+)
+```
+You can define any element of your specification by calling it directly as in
+`error_resource` or by class definition as in `MyResource` and then calling it.
 
+
+List resources are definitions of lists of the same resource.
+```python
 list_resource = MyListResource(resource=resource)
+```
 
+You can define `Response` objects with `status`, `description`(optional)  a
+`header`(optional) and a `Resource`/`ListResource` object as `body` (optionally)...
+
+```python
 ok_response = Response(
     status=200, description='Here is your resource list.', body=list_resource
 )
 
-error_response = Response(status=400, resource=error_resource)
-request = Request(verb=verbs.GET, name='my_request')
+error_response = Response(status=400, resource=error_resource, headers=[('Content-type': 'application-json')])
+```
 
+... and `Request` objects with `verb`, `description`, `header`(optional) and a `Resource`/`ListResource`
+object as `payload`.
+
+```python
+request = Request(verb=verbs.GET, payload=resource)
+```
+
+An `Action` groups your request and a list of responses for an specified action
+passed in description parameter.
+```python
 action = Action(
     description='Returns a list of resources.',
     request=request, responses=[error_response, ok_response]
 )
+```
+The Action object, as all other elements in Pactum, receive a description string
+that sets the `.__doc__` attribute and can be the docstring of the class
+if the object is defined by class definition.
 
-class Route(Route):
+A route can have a list of actions in an HTTP path.
+```python
+class ResourceRoute(Route):
     path = '/resource'
     action = [action]
 
+route = ResourceRoute()
+```
+
+Your routes can be grouped in API versions.
+```python
 class V1(Version):
     name = 'V1'
+    routes = [route]
 
 v1 = V1()
-
+```
+Then you can define your API. ;)
+```python
 class MyAPI(API):
     name = 'My API'
     versions = [v1]
 
 api = MyAPI()
 ```
+Be happy and ready to export your specification to any format you want.
 
-# Exporters
-Visitor design pattern. (http://wiki.c2.com/?VisitorPattern)
+# Exporting to openapi specs.
+Pactum has a command that exports your specification to OpenAPI. You can call it by using:
+```
+pactum-openapi <spec_file.py> <output_file> [--format=<json or yaml>]
+```
 
 
 # Road to version 1.
@@ -105,7 +140,3 @@ Visitor design pattern. (http://wiki.c2.com/?VisitorPattern)
 - [ ] Support for Authorization and Authentication Specifications.
 - [ ] Support for extensions.
 - [ ] Behaviors
-
-
-
-Create API specifications and documentation using Python.
