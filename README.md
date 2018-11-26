@@ -29,7 +29,7 @@ class MyAPI(API):
 Using the [visitor pattern](http://wiki.c2.com/?VisitorPattern) you can create
 exporters and extensions for any format or service you want.
 
-Take a look at [pactum/exporters/openapi.py](pactum/exporters/openapi.py).
+Take a look at [pactum/exporters/openapi.py](https://github.com/olist/pactum/blob/master/pactum/exporters/openapi.py).
 
 ### Architecture
 
