@@ -49,7 +49,7 @@ from pactum import fields, verbs
 class OrderResource(Resource):
     fields = [
         fields.IntegerField(name='code', required=True),
-        fields.TimestampField(name="created_at"),
+        fields.TimestampField(name='created_at'),
         fields.StringField(name='item')
     ]
 resource = OrderResource()
