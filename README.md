@@ -33,9 +33,7 @@ Take a look at [pactum/exporters/openapi.py](https://github.com/olist/pactum/blo
 
 ### Architecture
 
-Always keep this diagram in mind when defining your APIs.
-
-![Architecture Diagram](https://raw.githubusercontent.com/olist/pactum/documentation_for_0.1.0/Diagram.svg)
+Always keep [this diagram](https://github.com/olist/pactum/wiki/Architecture-Diagram) in mind when defining your APIs.
 
 
 ### Tutorial
