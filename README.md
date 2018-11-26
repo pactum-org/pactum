@@ -48,12 +48,13 @@ You can define a `Resource` object for your API.
 from pactum import Action, API, Resource, Response, Version
 from pactum import fields, verbs
 
-class MyResource(Resource):
+class OrderResource(Resource):
     fields = [
         fields.IntegerField(name='code', required=True),
+        fields.TimestampField(name="created_at"),
         fields.StringField(name='item')
     ]
-resource = MyResource()
+resource = OrderResource()
 
 error_resource = Resource(
     name = 'ErrorResource'
@@ -66,7 +67,7 @@ You can define any element of your specification by calling it directly as in
 
 List resources are definitions of lists of the same resource.
 ```python
-list_resource = MyListResource(resource=resource)
+list_order_resource = ListResource(resource=resource)
 ```
 
 You can define `Response` objects with `status`, `description`(optional)  a
@@ -74,7 +75,7 @@ You can define `Response` objects with `status`, `description`(optional)  a
 
 ```python
 ok_response = Response(
-    status=200, description='Here is your resource list.', body=list_resource
+    status=200, description='Here is your orders list.', body=list_resource
 )
 
 error_response = Response(status=400, resource=error_resource, headers=[('Content-type': 'application-json')])
