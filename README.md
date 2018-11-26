@@ -50,7 +50,7 @@ from pactum import fields, verbs
 
 class MyResource(Resource):
     fields = [
-        fields.IntegerFieldField(name='code', required=True),
+        fields.IntegerField(name='code', required=True),
         fields.StringField(name='item')
     ]
 resource = MyResource()
