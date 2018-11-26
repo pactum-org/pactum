@@ -7,7 +7,7 @@
 pip install pactum
 ```
 
-With `Pactum` you can **specify** HTTP-API using pure python.
+With `Pactum` you can **specify** HTTP-APIs using pure python.
 
 Pactum is easy to use, easy to extend and easy to contribute:
 
