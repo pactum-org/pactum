@@ -11,8 +11,8 @@ from shutil import rmtree
 NAME = 'pactum'
 VERSION = '0.0.1'
 DESCRIPTION = 'Create API specifications and documentation using Python'
-URL = 'https://github.com/osantana/pactum'
-EMAIL = 'pactum@osantana.me'
+URL = 'https://github.com/olist/pactum'
+EMAIL = 'pactum@olist.com'
 AUTHOR = 'Osvaldo Santana Neto'
 REQUIRED = ['Click', 'PyYAML']
 
