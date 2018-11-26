@@ -9,7 +9,7 @@ from setuptools import find_packages, setup, Command
 from shutil import rmtree
 
 NAME = 'pactum'
-VERSION = '0.0.1'
+VERSION = '0.1.0'
 DESCRIPTION = 'Create API specifications and documentation using Python'
 URL = 'https://github.com/olist/pactum'
 EMAIL = 'pactum@olist.com'
