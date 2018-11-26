@@ -92,7 +92,8 @@ passed in description parameter.
 ```python
 action = Action(
     description='Returns a list of resources.',
-    request=request, responses=[error_response, ok_response]
+    request=request,
+    responses=[error_response, ok_response]
 )
 ```
 The Action object, as all other elements in Pactum, receive a description string
