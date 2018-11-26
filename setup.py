@@ -64,9 +64,6 @@ setup(
     author_email=EMAIL,
     url=URL,
     packages=find_packages(),
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-    # },
     install_requires=REQUIRED,
     include_package_data=True,
     license='GPLv3',
