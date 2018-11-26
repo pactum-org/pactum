@@ -14,7 +14,7 @@ DESCRIPTION = 'Create API specifications and documentation using Python'
 URL = 'https://github.com/osantana/pactum'
 EMAIL = 'pactum@osantana.me'
 AUTHOR = 'Osvaldo Santana Neto'
-REQUIRED = ['Click', ]
+REQUIRED = ['Click', 'PyYAML']
 
 here = os.path.abspath(os.path.dirname(__file__))
 
