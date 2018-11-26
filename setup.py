@@ -9,11 +9,11 @@ from setuptools import find_packages, setup, Command
 from shutil import rmtree
 
 NAME = 'pactum'
-VERSION = '0.0.1'
+VERSION = '0.0.7'
 DESCRIPTION = 'Create API specifications and documentation using Python'
 URL = 'https://github.com/olist/pactum'
 EMAIL = 'pactum@olist.com'
-AUTHOR = 'Osvaldo Santana Neto'
+AUTHOR = 'Olist Developers'
 REQUIRED = ['Click', 'PyYAML']
 
 here = os.path.abspath(os.path.dirname(__file__))
