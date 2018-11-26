@@ -9,16 +9,16 @@ from setuptools import find_packages, setup, Command
 from shutil import rmtree
 
 NAME = 'pactum'
-VERSION = '0.0.1'
+VERSION = '0.0.7'
 DESCRIPTION = 'Create API specifications and documentation using Python'
-URL = 'https://github.com/osantana/pactum'
-EMAIL = 'pactum@osantana.me'
-AUTHOR = 'Osvaldo Santana Neto'
-REQUIRED = ['Click', ]
+URL = 'https://github.com/olist/pactum'
+EMAIL = 'pactum@olist.com'
+AUTHOR = 'Olist Developers'
+REQUIRED = ['Click', 'PyYAML']
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with codecs.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
+with codecs.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
 
 
@@ -60,13 +60,11 @@ setup(
     version=VERSION,
     description=DESCRIPTION,
     long_description=long_description,
+    long_description_content_type='text/markdown',
     author=AUTHOR,
     author_email=EMAIL,
     url=URL,
     packages=find_packages(),
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-    # },
     install_requires=REQUIRED,
     include_package_data=True,
     license='GPLv3',
