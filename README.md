@@ -103,7 +103,7 @@ A route can have a list of actions in an HTTP path.
 ```python
 class ResourceRoute(Route):
     path = '/resource'
-    action = [action]
+    actions = [action]
 
 route = ResourceRoute()
 ```
