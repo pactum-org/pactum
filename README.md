@@ -46,13 +46,13 @@ You can define a `Resource` object for your API.
 from pactum import Action, API, Resource, Response, Version
 from pactum import fields, verbs
 
-class OrderResource(Resource):
+class Order(Resource):
     fields = [
         fields.IntegerField(name='code', required=True),
         fields.TimestampField(name='created_at'),
         fields.StringField(name='item')
     ]
-resource = OrderResource()
+resource = Order()
 
 error_resource = Resource(
     name = 'ErrorResource'
