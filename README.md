@@ -19,7 +19,7 @@ is `pactum` package itself and some knowledge of python.
 ```python
 import pactum
 
-class MyAPI(API):
+class MyAPI(pactum.API):
     name = 'My API'
     versions = [...]
 ```
