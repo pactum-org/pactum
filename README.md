@@ -19,7 +19,7 @@ is `pactum` package itself and some knowledge of python.
 ```python
 import pactum
 
-class MyAPI(API):
+class MyAPI(pactum.API):
     name = 'My API'
     versions = [...]
 ```
@@ -46,13 +46,13 @@ You can define a `Resource` object for your API.
 from pactum import Action, API, Resource, Response, Version
 from pactum import fields, verbs
 
-class OrderResource(Resource):
+class Order(Resource):
     fields = [
         fields.IntegerField(name='code', required=True),
         fields.TimestampField(name='created_at'),
         fields.StringField(name='item')
     ]
-resource = OrderResource()
+resource = Order()
 
 error_resource = Resource(
     name = 'ErrorResource'
@@ -101,11 +101,11 @@ if the object is defined by class definition.
 
 A route can have a list of actions in an HTTP path.
 ```python
-class ResourceRoute(Route):
-    path = '/resource'
-    action = [action]
+class OrdersRoute(Route):
+    path = '/orders'
+    actions = [action]
 
-route = ResourceRoute()
+route = OrdersRoute()
 ```
 
 Your routes can be grouped in API versions.
@@ -118,11 +118,11 @@ v1 = V1()
 ```
 Then you can define your API. ;)
 ```python
-class MyAPI(API):
-    name = 'My API'
+class OrdersAPI(API):
+    name = 'Orders API'
     versions = [v1]
 
-api = MyAPI()
+api = OrdersAPI()
 ```
 Be happy and ready to export your specification to any format you want.
 
