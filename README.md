@@ -101,11 +101,11 @@ if the object is defined by class definition.
 
 A route can have a list of actions in an HTTP path.
 ```python
-class ResourceRoute(Route):
+class OrdersRoute(Route):
     path = '/orders'
     actions = [action]
 
-route = ResourceRoute()
+route = OrdersRoute()
 ```
 
 Your routes can be grouped in API versions.
@@ -118,11 +118,11 @@ v1 = V1()
 ```
 Then you can define your API. ;)
 ```python
-class MyAPI(API):
-    name = 'My API'
+class OrdersAPI(API):
+    name = 'Orders API'
     versions = [v1]
 
-api = MyAPI()
+api = OrdersAPI()
 ```
 Be happy and ready to export your specification to any format you want.
 
