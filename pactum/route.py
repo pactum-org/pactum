@@ -1,3 +1,4 @@
+import re
 from .base import Element
 
 
@@ -12,8 +13,13 @@ class Route(Element):
             except AttributeError:
                 raise TypeError("Missing path specification.")
         self.path = path
+        self.parameters = self._get_parameters(path)
 
         self._initialize_children(locals())
+
+    def _get_parameters(self, path):
+        parameters_re = re.compile(r'\{(?P<parameter>[\.\w-]+)\}')
+        return parameters_re.findall(path)
 
     def accept(self, visitor):
         visitor.visit_route(self)
