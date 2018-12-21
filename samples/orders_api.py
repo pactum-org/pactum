@@ -35,8 +35,11 @@ class OrderResource(pactum.Resource):
     ]
 
 
+order_resource = OrderResource()
+
+
 class OrderListResource(pactum.ListResource):
-    resource = OrderResource()
+    resource = order_resource
 
 
 class OrderListRoute(pactum.Route):
@@ -47,9 +50,25 @@ class OrderListRoute(pactum.Route):
             responses=[
                 pactum.Response(
                     status=200,
-                    body=OrderListResource())
+                    body=OrderListResource()
+                )
             ],
             description='List Orders'
+        )
+    ]
+
+
+class OrderDetailRoute(pactum.Route):
+    path = "/order/{code}"
+    actions = [
+        pactum.Action(
+            request=pactum.Request(verb=verbs.GET),
+            responses=[
+                pactum.Response(
+                    status=200,
+                    body=order_resource)
+            ],
+            description='Retrieve order by code.'
         )
     ]
 
@@ -61,6 +80,7 @@ api = pactum.API(
             name="v1",
             routes=[
                 OrderListRoute(),
+                OrderDetailRoute(),
             ]
         )
     ]

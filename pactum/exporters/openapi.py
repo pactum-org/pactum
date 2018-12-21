@@ -1,5 +1,6 @@
 from pactum import fields
 from pactum.visitor import BaseVisitor
+from pactum.resources import Resource
 
 FIELD_TYPES_MAP = {
     fields.IntegerField: 'integer',
@@ -51,12 +52,11 @@ class OpenAPIV3Exporter(BaseVisitor):
             'summary': '',
             'description': route.__doc__,
             'servers': [],
-            'parameters': {},
             # get, put, post, delete, options, head, patch and trace will be populated on children visits.
         }
 
     def visit_action(self, action):
-        self.result['paths'][action.parent.path][action.request.verb.lower()] = {
+        result = self.result['paths'][action.parent.path][action.request.verb.lower()] = {
             'description': action.__doc__,
             'tags': [],
             'summary': action.__doc__,
@@ -69,6 +69,29 @@ class OpenAPIV3Exporter(BaseVisitor):
             'security': {},
             'servers': {},
         }
+        parameters = action.parent.parameters
+        for parameter in parameters:
+            param_dict = self._parameter_to_dict(action, parameter)
+            result['parameters'].append(param_dict)
+
+    def _parameter_to_dict(self, action, parameter):
+        param_dict = ({
+            'name': parameter,
+            'in': 'path',
+            'required': True
+        })
+        success_responses = [
+            response for response in action.responses if str(response.status).startswith('20') and isinstance(response.body, Resource)
+        ]
+        if success_responses and isinstance(success_responses[0].body, Resource):
+            response = success_responses[0]
+            resource = response.body
+            field = resource[parameter]
+            param_dict['schema'] = {
+                '$ref': f'#/components/schemas/{resource.name}/properties/{field.name}'
+            }
+
+        return param_dict
 
     def visit_request(self, request):
         payload = {}
@@ -89,7 +112,7 @@ class OpenAPIV3Exporter(BaseVisitor):
         parsed_response['headers'] = headers
 
         if content_type is None:
-            content_type = '*/*'
+            content_type = 'application/json'
 
         if response.body:
             parsed_response['content'][content_type] = {'schema': {'$ref': f'#/components/schemas/{response.body.name}'}}

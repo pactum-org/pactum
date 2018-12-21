@@ -57,7 +57,6 @@ def test_visit_route_sets_specs_paths():
     assert paths['/test-path/']['summary'] == ''
     assert paths['/test-path/']['description'] == 'Route for tests.'
     assert paths['/test-path/']['servers'] == []
-    assert paths['/test-path/']['parameters'] == {}
 
 
 def test_visit_action_populates_paths_verbs():
@@ -81,6 +80,38 @@ def test_visit_action_populates_paths_verbs():
     assert parsed_action['tags'] == []
     assert parsed_action['externalDocs'] == []
     assert parsed_action['parameters'] == []
+    assert parsed_action['responses'] == {}
+    assert parsed_action['callbacks'] == []
+    assert parsed_action['security'] == {}
+    assert parsed_action['servers'] == {}
+
+
+def test_visit_action_populates_paths_verbs_with_parameters():
+    exporter = OpenAPIV3Exporter()
+    route = Route(path='/test-path/{code}', description='Route for tests.')
+    request = Request(verb=verbs.GET)
+    action = Action(request=request, responses=[], description='Testing action')
+    action.parent = route
+
+    exporter.result['paths'] = {'/test-path/{code}': {}}
+
+    exporter.visit_action(action)
+
+    assert 'get' in exporter.result['paths']['/test-path/{code}']
+    parsed_action = exporter.result['paths']['/test-path/{code}']['get']
+    assert parsed_action['description'] == 'Testing action'
+    assert parsed_action['summary'] == 'Testing action'
+    assert parsed_action['operationId'] == 'TestingAction'
+    assert parsed_action['deprecated'] is False
+
+    assert parsed_action['tags'] == []
+    assert parsed_action['externalDocs'] == []
+    assert len(parsed_action['parameters']) == 1
+    assert parsed_action['parameters'][0] == {
+        'name': 'code',
+        'in': 'path',
+        'required': True
+    }
     assert parsed_action['responses'] == {}
     assert parsed_action['callbacks'] == []
     assert parsed_action['security'] == {}
