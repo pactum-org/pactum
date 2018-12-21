@@ -72,28 +72,40 @@ You can define `Response` objects with `status`, `description`(optional)  a
 `header`(optional) and a `Resource`/`ListResource` object as `body` (optionally)...
 
 ```python
-ok_response = Response(
+list_response = Response(
     status=200, description='Here is your orders list.', body=list_resource
 )
 
-error_response = Response(status=400, resource=error_resource, headers=[('Content-type': 'application-json')])
+detail_response = Response(
+    status=200, description='Here is your orders list.', body=resource
+)
+
+error_response = Response(status=404, resource=error_resource, headers=[('Content-type': 'application-json')])
 ```
 
 ... and `Request` objects with `verb`, `description`, `header`(optional) and a `Resource`/`ListResource`
 object as `payload`.
 
 ```python
-request = Request(verb=verbs.GET, payload=resource)
+get_request = Request(verb=verbs.GET)
 ```
 
 An `Action` groups your request and a list of responses for an specified action
 passed in description parameter.
 ```python
-action = Action(
+list_action = Action(
     description='Returns a list of resources.',
-    request=request,
-    responses=[error_response, ok_response]
+    request=get_request,
+    responses=[error_response, list_response]
 )
+
+detail_action = Action(
+    description='Returns a resource based on its code.',
+    request=get_request,
+    responses=[error_response, detail_response]
+)
+
+
 ```
 The Action object, as all other elements in Pactum, receive a description string
 that sets the `.__doc__` attribute and can be the docstring of the class
@@ -101,18 +113,20 @@ if the object is defined by class definition.
 
 A route can have a list of actions in an HTTP path.
 ```python
-class OrdersRoute(Route):
+class OrderListRoute(Route):
     path = '/orders'
-    actions = [action]
+    actions = [list_action]
 
-route = OrdersRoute()
+list_route = OrderListRoute()
+
+detail_route = OrderRoute(path='/orders/{code}', actions=detail_action)
 ```
 
 Your routes can be grouped in API versions.
 ```python
 class V1(Version):
     name = 'V1'
-    routes = [route]
+    routes = [list_route, detail_route]
 
 v1 = V1()
 ```
@@ -136,7 +150,7 @@ pactum-openapi <spec_file.py> <output_file> [--format=<json or yaml>]
 # Road to version 1.
 - [ ] Test elements .accept(visitor) methods.
 - [ ] Support for version selectors (Versions should be specified on HTTP header, path, or custom fields)
-- [ ] Stabilize the way we work with path parameters.
+- [x] Stabilize the way we work with path parameters.
 - [ ] Support for Authorization and Authentication Specifications.
 - [ ] Support for extensions.
 - [ ] Behaviors
