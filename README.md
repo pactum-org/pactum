@@ -77,7 +77,7 @@ list_response = Response(
 )
 
 detail_response = Response(
-    status=200, description='Here is your orders list.', body=resource
+    status=200, description='Here is your order.', body=resource
 )
 
 error_response = Response(status=404, resource=error_resource, headers=[('Content-type': 'application-json')])
@@ -90,8 +90,7 @@ object as `payload`.
 get_request = Request(verb=verbs.GET)
 ```
 
-An `Action` groups your request and a list of responses for an specified action
-passed in description parameter.
+An `Action` groups your request and a list of responses for a specified action passed in the description parameter.
 ```python
 list_action = Action(
     description='Returns a list of resources.',

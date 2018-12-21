@@ -50,7 +50,8 @@ class OrderListRoute(pactum.Route):
             responses=[
                 pactum.Response(
                     status=200,
-                    body=OrderListResource())
+                    body=OrderListResource()
+                )
             ],
             description='List Orders'
         )
