@@ -2,7 +2,8 @@ import pytest
 from copy import copy
 
 from pactum import Action, API, fields
-from pactum import ListResource, Resource, Response, Request, Route
+from pactum import ListResource, Querystring
+from pactum import Resource, Response, Request, Route
 from pactum import Version, verbs
 from pactum.exporters.openapi import NotSpecified, OpenAPIV3Exporter
 
@@ -116,6 +117,31 @@ def test_visit_action_populates_paths_verbs_with_parameters():
     assert parsed_action['callbacks'] == []
     assert parsed_action['security'] == {}
     assert parsed_action['servers'] == {}
+
+
+def test_visit_action_populates_queries_with_route_qs():
+    exporter = OpenAPIV3Exporter()
+    querystring = Querystring(name='limit', type=fields.IntegerField)
+    route = Route(path='/test-path', querystrings=[querystring])
+    request = Request(verb=verbs.GET)
+    action = Action(request=request, responses=[], description='Testing action')
+    action.parent = route
+
+    exporter.result['paths'] = {'/test-path': {}}
+
+    exporter.visit_action(action)
+
+    assert 'get' in exporter.result['paths']['/test-path']
+    parsed_action = exporter.result['paths']['/test-path']['get']
+
+    assert len(parsed_action['parameters']) == 1
+    assert parsed_action['parameters'][0] == {
+        'name': 'limit',
+        'in': 'query',
+        'required': False,
+        'schema': {'type': 'integer'},
+        'description': ''
+    }
 
 
 def test_visit_request_populates_requestBody_with_payload_reference(resource):

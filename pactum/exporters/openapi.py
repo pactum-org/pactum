@@ -77,6 +77,11 @@ class OpenAPIV3Exporter(BaseVisitor):
             param_dict = self._parameter_to_dict(action, parameter)
             result['parameters'].append(param_dict)
 
+        querystrings = action.parent.querystrings
+        for qs in querystrings:
+            qs_dict = self._querystring_to_dict(action, qs)
+            result['parameters'].append(qs_dict)
+
     def _parameter_to_dict(self, action, parameter):
         param_dict = ({
             'name': parameter,
@@ -95,6 +100,19 @@ class OpenAPIV3Exporter(BaseVisitor):
             }
 
         return param_dict
+
+    def _querystring_to_dict(self, action, querystring):
+        qs_dict = ({
+            'name': querystring.name,
+            'in': 'query',
+            'required': querystring.required,
+            'description': querystring.__doc__
+        })
+        if issubclass(querystring.type, fields.Field):
+            qs_dict['schema'] = {
+                'type': self._map_field_type(querystring)
+            }
+        return qs_dict
 
     def visit_request(self, request):
         payload = {}
@@ -133,10 +151,10 @@ class OpenAPIV3Exporter(BaseVisitor):
             'type': 'array', 'items': {'$ref': f'#/components/schemas/{list_resource.resource.name}'}
         }
 
-    def _map_field_type(self, field):
-        type_ = FIELD_TYPES_MAP.get(field.type, field.extensions.get('openapi.type'))
+    def _map_field_type(self, element):
+        type_ = FIELD_TYPES_MAP.get(element.type, element.extensions.get('openapi.type'))
         if type_ is None:
-            raise NotSpecified(f'Type for field {field.type} is not specified for OpenAPI.')
+            raise NotSpecified(f'Type for field {element.type} is not specified for OpenAPI.')
         return type_
 
     def visit_field(self, field):
