@@ -55,3 +55,19 @@ def test_route_with_multiple_parameters():
 
     assert route.path == '/test/{test_id}/{test.slug}/{test-uuid}'
     assert route.parameters == ['test_id', 'test.slug', 'test-uuid']
+
+
+def test_route_with_querystrings(querystring):
+    route = Route('/test/', querystrings=[querystring])
+    assert route.path == '/test/'
+    assert len(route.querystrings) == 1
+
+
+def test_class_defined_route_with_querystrings(querystring):
+    class TestRoute(Route):
+        path = '/test/'
+        querystrings = [querystring]
+
+    route = TestRoute()
+    assert route.path == '/test/'
+    assert len(route.querystrings) == 1

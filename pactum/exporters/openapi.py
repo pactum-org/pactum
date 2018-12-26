@@ -55,6 +55,9 @@ class OpenAPIV3Exporter(BaseVisitor):
             # get, put, post, delete, options, head, patch and trace will be populated on children visits.
         }
 
+    def visit_querystring(self, querystring):
+        pass
+
     def visit_action(self, action):
         result = self.result['paths'][action.parent.path][action.request.verb.lower()] = {
             'description': action.__doc__,
