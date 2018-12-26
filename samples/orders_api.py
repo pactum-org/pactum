@@ -56,6 +56,12 @@ class OrderListRoute(pactum.Route):
             description='List Orders'
         )
     ]
+    querystrings = [
+        pactum.Querystring(
+            name='limit', type=fields.IntegerField,
+            description='Limits the number of order in the response'
+        ),
+    ]
 
 
 class OrderDetailRoute(pactum.Route):

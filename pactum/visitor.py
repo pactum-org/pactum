@@ -11,6 +11,9 @@ class BaseVisitor:
     def visit_action(self, action):
         raise NotImplementedError('visit_action is not implemented')
 
+    def visit_querystring(self, action):
+        raise NotImplementedError('visit_querystring is not implemented')
+
     def visit_request(self, request):
         raise NotImplementedError('visit_request is not implemented')
 

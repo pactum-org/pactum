@@ -3,6 +3,7 @@ import pytest
 from pactum import verbs
 from pactum.action import Action
 from pactum.api import API
+from pactum.querystring import Querystring
 from pactum.resources import Resource
 from pactum.request import Request
 from pactum.response import Response
@@ -52,3 +53,8 @@ def response():
 @pytest.fixture
 def action(request, response):
     return Action(request=request, responses=[response])
+
+
+@pytest.fixture
+def querystring():
+    return Querystring(name='test_querystring')

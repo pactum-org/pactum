@@ -1,22 +1,7 @@
-from .base import Element
+from .base import KeyValueElement
 
 
-class Field(Element):
-    # noinspection PyShadowingBuiltins
-    def __init__(self, name=None, type=None, required=None, **kwargs):
-        super().__init__(**kwargs)
-        if required is None:
-            required = getattr(self, 'required', False)
-        self.required = required
-
-        if name is None:
-            name = getattr(self, 'name', '')
-        self.name = name
-
-        if type is None:
-            type = getattr(self, 'type', self.__class__)
-        self.type = type
-
+class Field(KeyValueElement):
     def accept(self, visitor):
         visitor.visit_field(self)
 
