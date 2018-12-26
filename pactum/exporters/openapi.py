@@ -79,7 +79,7 @@ class OpenAPIV3Exporter(BaseVisitor):
 
         querystrings = action.parent.querystrings
         for qs in querystrings:
-            qs_dict = self._querystring_to_dict(action, qs)
+            qs_dict = self._querystring_to_dict(qs)
             result['parameters'].append(qs_dict)
 
     def _parameter_to_dict(self, action, parameter):
@@ -101,7 +101,7 @@ class OpenAPIV3Exporter(BaseVisitor):
 
         return param_dict
 
-    def _querystring_to_dict(self, action, querystring):
+    def _querystring_to_dict(self, querystring):
         qs_dict = ({
             'name': querystring.name,
             'in': 'query',
