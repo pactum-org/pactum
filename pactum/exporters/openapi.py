@@ -106,7 +106,7 @@ class OpenAPIV3Exporter(BaseVisitor):
             'name': querystring.name,
             'in': 'query',
             'required': querystring.required,
-            'description': querystring.__doc__
+            'description': querystring.__doc__,
         })
         if issubclass(querystring.type, fields.Field):
             qs_dict['schema'] = {

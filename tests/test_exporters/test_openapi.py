@@ -140,7 +140,7 @@ def test_visit_action_populates_queries_with_route_qs():
         'in': 'query',
         'required': False,
         'schema': {'type': 'integer'},
-        'description': ''
+        'description': '',
     }
 
 
