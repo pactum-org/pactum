@@ -134,3 +134,10 @@ def test_basic_decimal_field_class_definition():
 def test_fail_basic_decimal_field_no_precision():
     with pytest.raises(TypeError):
         DecimalField(name='dec_field')
+
+
+def test_initialization_with_parameters_none():
+    field = Field(name=None, type=None, description=None)
+    assert field.type is Field
+    assert field.name == ''
+    assert field.__doc__ == ''

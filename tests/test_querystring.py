@@ -37,4 +37,10 @@ def test_field_type_can_be_class_name():
 
     assert qs.name == 'TestField'
     assert qs.type == Querystring
+
+
+def test_initialization_with_parameters_none():
+    qs = Querystring(name=None, type=None, description=None)
+    assert qs.name == ''
     assert qs.type == Querystring
+    assert qs.__doc__ == ''
