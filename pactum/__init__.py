@@ -1,4 +1,4 @@
-from .import fields, verbs  # NOQA
+from . import fields, verbs  # NOQA
 from .action import Action  # NOQA
 from .api import API  # NOQA
 from .resources import ListResource, Resource  # NOQA
