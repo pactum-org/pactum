@@ -1,3 +1,4 @@
+from unittest.mock import call, MagicMock, Mock
 import pytest
 
 from pactum.fields import Field, IntegerField, PositiveIntegerField, ResourceField, StringField, DecimalField
@@ -141,3 +142,18 @@ def test_initialization_with_parameters_none():
     assert field.type is Field
     assert field.name == ''
     assert field.__doc__ == ''
+
+
+def test_accept_method_calls_visit():
+    mock_wrapper = Mock()
+    mock_wrapper.mocked_visitor = MagicMock()
+    field = Field(
+        name='TestField',
+        type='type',
+    )
+
+    field.accept(mock_wrapper.mocked_visitor)
+
+    assert mock_wrapper.mock_calls == [
+        call.mocked_visitor.visit_field(field)
+    ]

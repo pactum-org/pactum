@@ -1,3 +1,4 @@
+from unittest.mock import call, MagicMock, Mock
 from pactum.querystring import Querystring
 
 
@@ -44,3 +45,16 @@ def test_initialization_with_parameters_none():
     assert qs.name == ''
     assert qs.type == Querystring
     assert qs.__doc__ == ''
+
+
+def test_accept_method_calls_visit():
+    mock_wrapper = Mock()
+    mock_wrapper.mocked_visitor = MagicMock()
+
+    querystring = Querystring(
+        name='test_querystring',
+    )
+    querystring.accept(mock_wrapper.mocked_visitor)
+
+    mock_wrapper.mock_calls = [
+        call.mocked_visitor.visit_querystring(querystring)]

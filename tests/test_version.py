@@ -1,3 +1,5 @@
+from unittest.mock import call, MagicMock, Mock
+
 import pytest
 
 from pactum import verbs
@@ -69,3 +71,22 @@ def test_validate_ambiguous_routes_on_version_init(resource):
 
     with pytest.raises(AttributeError):
         TestVersion()
+
+
+def test_accept_method_calls_visit_and_route_accepts():
+    mock_wrapper = Mock()
+    mock_wrapper.mocked_visitor = MagicMock()
+    mock_wrapper.mocked_route1 = MagicMock()
+    mock_wrapper.mocked_route2 = MagicMock()
+
+    version = Version(
+        name='v2',
+        routes=[mock_wrapper.mocked_route1, mock_wrapper.mocked_route2])
+    version.accept(mock_wrapper.mocked_visitor)
+
+    # Assert last 3 calls because of iterations over route on init.
+    assert mock_wrapper.mock_calls[-3:] == [
+        call.mocked_visitor.visit_version(version),
+        call.mocked_route1.accept(mock_wrapper.mocked_visitor),
+        call.mocked_route2.accept(mock_wrapper.mocked_visitor)
+    ]

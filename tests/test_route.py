@@ -1,3 +1,4 @@
+from unittest.mock import call, MagicMock, Mock
 import pytest
 
 from pactum.route import Route
@@ -71,3 +72,27 @@ def test_class_defined_route_with_querystrings(querystring):
     route = TestRoute()
     assert route.path == '/test/'
     assert len(route.querystrings) == 1
+
+
+def test_accept_method_calls_visit_and_actions_and_querysets_accepts():
+    mock_wrapper = Mock()
+    mock_wrapper.mocked_visitor = MagicMock()
+    mock_wrapper.mocked_action1 = MagicMock()
+    mock_wrapper.mocked_action2 = MagicMock()
+    mock_wrapper.mocked_querystring1 = MagicMock()
+    mock_wrapper.mocked_querystring2 = MagicMock()
+
+    route = Route(
+        path='/',
+        actions=[mock_wrapper.mocked_action1, mock_wrapper.mocked_action2],
+        querystrings=[mock_wrapper.mocked_querystring1, mock_wrapper.mocked_querystring2]
+    )
+    route.accept(mock_wrapper.mocked_visitor)
+
+    assert mock_wrapper.mock_calls == [
+        call.mocked_visitor.visit_route(route),
+        call.mocked_action1.accept(mock_wrapper.mocked_visitor),
+        call.mocked_action2.accept(mock_wrapper.mocked_visitor),
+        call.mocked_querystring1.accept(mock_wrapper.mocked_visitor),
+        call.mocked_querystring2.accept(mock_wrapper.mocked_visitor),
+    ]

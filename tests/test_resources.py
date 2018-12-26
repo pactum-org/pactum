@@ -1,3 +1,4 @@
+from unittest.mock import call, MagicMock, Mock
 import pytest
 
 from pactum.fields import Field
@@ -118,3 +119,39 @@ def test_basic_list_resource_class_definition(resource):
 def test_fail_list_resource_with_no_resource():
     with pytest.raises(TypeError):
         ListResource(name="ListResource")
+
+
+def test_resource_accept_method_calls_visit_and_fields_accept():
+    mock_wrapper = Mock()
+    mock_wrapper.mocked_visitor = MagicMock()
+    mock_wrapper.mocked_field1 = MagicMock()
+    mock_wrapper.mocked_field2 = MagicMock()
+
+    resource = Resource(
+        name='Test Resource',
+        fields=[mock_wrapper.mocked_field1, mock_wrapper.mocked_field2],
+    )
+    resource.accept(mock_wrapper.mocked_visitor)
+
+    assert mock_wrapper.mock_calls[-3:] == [
+        call.mocked_visitor.visit_resource(resource),
+        call.mocked_field1.accept(mock_wrapper.mocked_visitor),
+        call.mocked_field2.accept(mock_wrapper.mocked_visitor),
+    ]
+
+
+def test_list_resource_accept_method_calls_visit_and_resource_accept():
+    mock_wrapper = Mock()
+    mock_wrapper.mocked_visitor = MagicMock()
+    mock_wrapper.mocked_resource = MagicMock()
+
+    list_resource = ListResource(
+        name='Test Resource',
+        resource=mock_wrapper.mocked_resource
+    )
+    list_resource.accept(mock_wrapper.mocked_visitor)
+
+    assert mock_wrapper.mock_calls == [
+        call.mocked_visitor.visit_list_resource(list_resource),
+        call.mocked_resource.accept(mock_wrapper.mocked_visitor)
+    ]
