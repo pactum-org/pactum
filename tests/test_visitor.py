@@ -19,7 +19,6 @@ class TestVisitor(BaseVisitor):
 
     def visit_querystring(self, querystring):
         self.blueprints.append('querystring visited')
-        return querystring
 
     def visit_request(self, request):
         self.blueprints.append('request visisted')
