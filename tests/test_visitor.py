@@ -77,7 +77,10 @@ def test_visitor_route_call(visitor):
 
 def test_visitor_route_call_with_querystring(visitor):
     route = Route(
-        path='/test', actions=[Action(responses=[])], querystrings=[Querystring(name='test_qs')])
+        path='/test',
+        actions=[Action(responses=[])],
+        querystrings=[Querystring(name='test_qs')]
+    )
     route.accept(visitor)
 
     assert visitor.blueprints == [
@@ -124,7 +127,7 @@ def test_visitor_resource_call(visitor):
 
     assert visitor.blueprints == [
         'resource visited',
-        'field visited'
+        'field visited',
     ]
 
 
@@ -134,7 +137,7 @@ def test_visitor_list_resource_call(visitor):
 
     assert visitor.blueprints == [
         'list resource visited',
-        'resource visited'
+        'resource visited',
     ]
 
 
@@ -143,7 +146,7 @@ def test_visitor_field_call(visitor):
     field.accept(visitor)
 
     assert visitor.blueprints == [
-        'field visited'
+        'field visited',
     ]
 
 
@@ -151,4 +154,6 @@ def test_visitor_querystring_call(visitor):
     querystring = Querystring()
     querystring.accept(visitor)
 
-    assert visitor.blueprints == ['querystring visited']
+    assert visitor.blueprints == [
+        'querystring visited',
+    ]
