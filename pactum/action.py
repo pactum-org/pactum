@@ -24,6 +24,7 @@ class Action(Element):
 
     def accept(self, visitor):
         visitor.visit_action(self)
-        self.request.accept(visitor)
+        if self.request:
+            self.request.accept(visitor)
         for response in self.responses:
             response.accept(visitor)
