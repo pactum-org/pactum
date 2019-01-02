@@ -147,7 +147,7 @@ pactum-openapi <spec_file.py> <output_file> [--format=<json or yaml>]
 
 
 # Road to version 1.
-- [ ] Test elements .accept(visitor) methods.
+- [x] Test elements .accept(visitor) methods.
 - [ ] Support for version selectors (Versions should be specified on HTTP header, path, or custom fields)
 - [x] Stabilize the way we work with path parameters.
 - [ ] Support for Authorization and Authentication Specifications.
