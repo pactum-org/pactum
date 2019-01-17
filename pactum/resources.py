@@ -9,12 +9,16 @@ class BaseResource:
 
 
 class Resource(BaseResource):
-    def __init__(self, name=None, fields=None):
+    def __init__(self, name=None, fields=None, behaviors=None):
         super().__init__(name)
 
         self._mapfields = {}
         self.fields = []
         self._load_fields(fields)
+
+        if behaviors is None:
+            behaviors = getattr(self, "behavior", [])
+        self.behaviors = behaviors
 
     def _load_fields(self, fields):
         if fields is None:
