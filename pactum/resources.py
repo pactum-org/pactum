@@ -9,7 +9,7 @@ class BaseResource:
 
 
 class Resource(BaseResource):
-    def __init__(self, name=None, fields=None, behaviors=None):
+    def __init__(self, name=None, fields=None):
         super().__init__(name)
 
         self._mapfields = {}
