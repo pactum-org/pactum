@@ -1,3 +1,6 @@
+from pactum.fields import Field
+
+
 class BaseResource:
     def __init__(self, name=None):
         if name is None:
@@ -8,21 +11,48 @@ class BaseResource:
 class Resource(BaseResource):
     def __init__(self, name=None, fields=None, behaviors=None):
         super().__init__(name)
+
         self._mapfields = {}
-
-        if fields is None:
-            fields = getattr(self.__class__, "fields", [])
-
-        for field in fields:
-            if self._mapfields.get(field.name):
-                raise AttributeError("Duplicate field names")
-            self._mapfields[field.name] = field
-            field.parent = self
-        self.fields = fields
+        self.fields = []
+        self._load_fields(fields)
 
         if behaviors is None:
             behaviors = getattr(self, "behavior", [])
         self.behaviors = behaviors
+
+    def _load_fields(self, fields):
+        if fields is None:
+            fields = getattr(self.__class__, "fields", [])
+
+        for field in fields:
+            self._add_field(field.name, field)
+
+        field_class = getattr(self.__class__, "Fields", None)
+
+        if not field_class:
+            return fields
+
+        for name in dir(field_class):
+            field = getattr(field_class, name)
+
+            if not isinstance(field, Field):
+                continue
+
+            if field.name and field.name != name:
+                raise ValueError("Cannot specify a different name to fields")
+
+            self._add_field(name, field)
+
+        return fields
+
+    def _add_field(self, name, field):
+        if self._mapfields.get(name):
+            raise ValueError("Duplicate field names")
+
+        self.fields.append(field)
+        self._mapfields[name] = field
+        field.parent = self
+        field.name = name
 
     def __getitem__(self, item):
         return self._mapfields[item]
