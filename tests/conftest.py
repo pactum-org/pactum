@@ -41,7 +41,7 @@ def resource():
 
 
 @pytest.fixture
-def request():
+def request_(): # `request` is a pytest reserved fixture.
     return Request(verb=verbs.GET)
 
 
@@ -51,8 +51,8 @@ def response():
 
 
 @pytest.fixture
-def action(request, response):
-    return Action(request=request, responses=[response])
+def action(request_, response):
+    return Action(request=request_, responses=[response])
 
 
 @pytest.fixture

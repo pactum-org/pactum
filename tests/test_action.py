@@ -3,10 +3,10 @@ import pytest
 from pactum.action import Action
 
 
-def test_basic_action(request, response):
-    test_action = Action(request=request, responses=[response], description="Test action")
+def test_basic_action(request_, response):
+    test_action = Action(request=request_, responses=[response], description="Test action")
 
-    assert test_action.request == request
+    assert test_action.request == request_
     assert test_action.responses == [response]
     assert test_action.responses[0].parent == test_action
     assert test_action.request.parent == test_action
