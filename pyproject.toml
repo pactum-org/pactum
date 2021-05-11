@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "pactum"
+version = "0.2.0"
+description = "Create API specifications and documentation using Python"
+authors = ["Pactum Developers <pactum@pactum-org.com>"]
+repository = "https://github.com/pactum-org/pactum"
+keywords = [ "api", "specification", "documentation" ]
+license = "GPLv3"
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Testing",
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+coveralls = "*"
+pre-commit = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-runner = "*"
+
+[build-system]
+requires = ["poetry>=1.1"]
+build-backend = "poetry.masonry.api"
