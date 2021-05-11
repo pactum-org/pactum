@@ -43,7 +43,7 @@ jobs:
           name: run tests
           command: |
             poetry run pytest -vv -s --cov pactum --cov-report=html
-            coveralls
+            poetry run coveralls
 
       - store_artifacts:
           path: htmlcov
