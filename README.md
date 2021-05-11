@@ -1,7 +1,7 @@
 # Pactum
 ## The HTTP-API specification sketchbook for pythonistas
 
-[![Circle CI](https://circleci.com/gh/olist/pactum.svg?style=svg)](https://circleci.com/gh/olist/pactum)
+[![Circle CI](https://circleci.com/gh/pactum-org/pactum.svg?style=svg)](https://circleci.com/gh/pactum-org/pactum)
 
 ```shell
 pip install pactum
@@ -29,11 +29,11 @@ class MyAPI(pactum.API):
 Using the [visitor pattern](http://wiki.c2.com/?VisitorPattern) you can create
 exporters and extensions for any format or service you want.
 
-Take a look at [pactum/exporters/openapi.py](https://github.com/olist/pactum/blob/master/pactum/exporters/openapi.py).
+Take a look at [pactum/exporters/openapi.py](https://github.com/pactum-org/pactum/blob/master/pactum/exporters/openapi.py).
 
 ### Architecture
 
-Always keep [this diagram](https://github.com/olist/pactum/wiki/Architecture-Diagram) in mind when defining your APIs.
+Always keep [this diagram](https://github.com/pactum-org/pactum/wiki/Architecture-Diagram) in mind when defining your APIs.
 
 
 ### Tutorial

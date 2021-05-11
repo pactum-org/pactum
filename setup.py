@@ -11,9 +11,9 @@ from shutil import rmtree
 NAME = 'pactum'
 VERSION = '0.2.0'
 DESCRIPTION = 'Create API specifications and documentation using Python'
-URL = 'https://github.com/olist/pactum'
-EMAIL = 'pactum@olist.com'
-AUTHOR = 'Olist Developers'
+URL = 'https://github.com/pactum-org/pactum'
+EMAIL = 'pactum@pactum-org.com'
+AUTHOR = 'Pactum Developers'
 REQUIRED = ['Click', 'PyYAML']
 
 here = os.path.abspath(os.path.dirname(__file__))

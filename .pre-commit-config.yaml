@@ -28,10 +28,3 @@ repos:
     language: pygrep
     entry: 'datetime\.now\(\)'
     types: [python]
-
-- repo: git@github.com:olist/hulks.git
-  rev: 0.2.3
-  hooks:
-  - id: check-filename
-  - id: check-logger
-  - id: check-invalid-domains
