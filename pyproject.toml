@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "pactum"
+version = "0.3.0"
+description = "Create API specifications and documentation using Python Language"
+authors = ["Osvaldo Santana Neto <pactum@osantana.me>"]
+license = "GPLv3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+click = "^8.0.3"
+PyYAML = "^6.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
+pre-commit = "^2.15.0"
+
+[tool.pytest.ini_options]
+addopts = "--cov=pactum"

@@ -2,31 +2,30 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.1
+      - image: cimg/python:3.10.0
     working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "requirements-dev.txt" }}
+          - v1-dependencies-{{ checksum "poetry.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
           name: install dependencies
           command: |
             python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements-dev.txt
+            ./venv/bin/pip install -U poetry coveralls
+            ./venv/bin/poetry install
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements-dev.txt" }}
+          key: v1-dependencies-{{ checksum "poetry.lock" }}
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
-            python setup.py test
-            coveralls
+            ./venv/bin/pytest
+            ./venv/bin/coveralls
       - store_artifacts:
           path: test-reports
           destination: test-reports
