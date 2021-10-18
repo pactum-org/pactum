@@ -15,8 +15,9 @@ jobs:
           name: install dependencies
           command: |
             python3 -m venv venv
-            ./venv/bin/pip install -U poetry coveralls
-            ./venv/bin/poetry install
+            . ./venv/bin/activate
+            pip install -U poetry coveralls
+            poetry install
       - save_cache:
           paths:
             - ./venv
@@ -24,8 +25,8 @@ jobs:
       - run:
           name: run tests
           command: |
-            ./venv/bin/pytest
-            ./venv/bin/coveralls
+            pytest
+            coveralls
       - store_artifacts:
           path: test-reports
           destination: test-reports
