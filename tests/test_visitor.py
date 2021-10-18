@@ -150,6 +150,16 @@ def test_visitor_field_call(visitor):
     ]
 
 
+def test_visitor_resource_field_call(visitor):
+    field = fields.ResourceField(name='test', resource=Resource())
+    field.accept(visitor)
+
+    assert visitor.blueprints == [
+        'field visited',
+        'resource visited',
+    ]
+
+
 def test_visitor_querystring_call(visitor):
     querystring = Querystring()
     querystring.accept(visitor)

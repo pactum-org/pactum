@@ -1,5 +1,9 @@
 class Element:
-    def __init__(self, description=None, extensions=None, **kwargs):
+    _children_name = None
+
+    def __init__(self, parent=None, description=None, extensions=None, **kwargs):
+        self.parent = parent
+
         if description is None:
             description = getattr(self, 'description', self.__doc__ or '')
         self.__doc__ = description.strip()
@@ -8,7 +12,7 @@ class Element:
             extensions = getattr(self, 'extensions', {})
         self.extensions = extensions
 
-    def _initialize_children(self, attrs):
+    def _initialize_children(self, attrs):  # TODO: refactor this to use kwargs and remove locals() references on caller
         setattr(self, self._children_name, [])
 
         children = attrs.get(self._children_name)
