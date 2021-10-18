@@ -28,7 +28,7 @@ def test_basic_action_class_def(response):
 
 def test_basic_action_class_def_with_doc_description(response):
     class TestAction(Action):
-        '''Test Action.'''
+        """Test Action."""
         request = None
         responses = [response]
 

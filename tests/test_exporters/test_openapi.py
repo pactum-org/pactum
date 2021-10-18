@@ -144,7 +144,7 @@ def test_visit_action_populates_queries_with_route_qs():
     }
 
 
-def test_visit_request_populates_requestBody_with_payload_reference(resource):
+def test_visit_request_populates_request_body_with_payload_reference(resource):
 
     exporter = OpenAPIV3Exporter()
     route = Route(path='/test-path/')
@@ -204,7 +204,9 @@ def test_visit_resource_populates_schemas_component(resource):
 
 def test_visit_resource_populates_required_fields():
     class TestResource(Resource):
-        fields = [fields.IntegerField(name='code', required=True)]
+        fields = [
+            fields.IntegerField(name='code', required=True),
+        ]
 
     exporter = OpenAPIV3Exporter()
     exporter.visit_resource(TestResource())
