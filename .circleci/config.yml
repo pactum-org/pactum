@@ -33,7 +33,9 @@ jobs:
 
       - run:
           name: "Running linters"
-          command: SKIP=no-commit-to-branch poetry run pre-commit run -a -v
+          command: |
+            . ./venv/bin/activate
+            SKIP=no-commit-to-branch pre-commit run -a -v
 
       - save_cache:
           name: "Saving hooks cache"
