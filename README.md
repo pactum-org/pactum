@@ -2,6 +2,7 @@
 ## The HTTP-API specification sketchbook for pythonistas
 
 [![Circle CI](https://circleci.com/gh/pactum-org/pactum.svg?style=svg)](https://circleci.com/gh/pactum-org/pactum)
+[![Coverage Status](https://coveralls.io/repos/github/pactum-org/pactum/badge.svg?branch=master)](https://coveralls.io/github/pactum-org/pactum?branch=master)
 
 ```shell
 pip install pactum
