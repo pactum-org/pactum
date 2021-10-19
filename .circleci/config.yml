@@ -28,6 +28,3 @@ jobs:
             . ./venv/bin/activate
             pytest
             coveralls
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
