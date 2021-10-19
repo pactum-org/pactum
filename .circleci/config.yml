@@ -15,7 +15,9 @@ jobs:
 
       - run:
           name: "Install dependencies"
-          command: poetry install
+          command: |
+            poetry self update
+            poetry install
 
       - save_cache:
           name: "Saving dependencies cache"
