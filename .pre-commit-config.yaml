@@ -1,6 +1,6 @@
 repos:
 -   repo: git@github.com:pre-commit/pre-commit-hooks
-    rev: v2.0.0
+    rev: v3.4.0
     hooks:
     - id: debug-statements
     - id: trailing-whitespace
@@ -17,8 +17,12 @@ repos:
       args: ['--allow-missing-credentials']
     - id: detect-private-key
     - id: forbid-new-submodules
+
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.9.2
+  hooks:
     - id: flake8
-      args: ['--exclude=docs/*,*migrations*', '--ignore=E501']
+      args: ['--exclude=docs/*,*migrations*', '--ignore=E501,W503,E203']
 
 - repo: local
   hooks:

@@ -2,8 +2,23 @@
 name = "pactum"
 version = "0.3.0"
 description = "Create API specifications and documentation using Python Language"
+keywords = ["api", "specification", "documentation"]
 authors = ["Osvaldo Santana Neto <pactum@osantana.me>"]
 license = "GPLv3"
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Testing",
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -21,3 +36,6 @@ pre-commit = "^2.15.0"
 
 [tool.pytest.ini_options]
 addopts = "--cov=pactum"
+
+[tool.poetry.scripts]
+pactum-openapi = "commands.openapi_export:openapi_export"

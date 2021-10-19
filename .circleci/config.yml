@@ -1,30 +1,48 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
       - image: cimg/python:3.10.0
     working_directory: ~/repo
+
     steps:
       - checkout
+
       - restore_cache:
+          name: "Restoring dependencies cache"
           keys:
           - v1-dependencies-{{ checksum "poetry.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+
       - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . ./venv/bin/activate
-            pip install -U poetry coveralls pip setuptools
-            poetry install -n --no-ansi
+          name: "Install dependencies"
+          command: poetry install
+
       - save_cache:
-          paths:
-            - ./venv
+          name: "Saving dependencies cache"
           key: v1-dependencies-{{ checksum "poetry.lock" }}
+          paths:
+            - /home/circleci/.cache/pypoetry/virtualenvs
+
+      - restore_cache:
+          name: "Restoring hooks cache"
+          key: v1-hooks-{{ checksum ".pre-commit-config.yaml" }}
+
       - run:
-          name: run tests
+          name: "Running linters"
+          command: SKIP=no-commit-to-branch poetry run pre-commit run -a -v
+
+      - save_cache:
+          name: "Saving hooks cache"
+          key: v1-hooks-{{ checksum ".pre-commit-config.yaml" }}
+          paths:
+            - "~/.cache/pre-commit/"
+
+      - run:
+          name: "Running tests"
           command: |
-            . ./venv/bin/activate
-            pytest
-            coveralls
+            poetry run pytest -vv -s --cov pactum --cov-report=html
+            poetry run coveralls
+
+      - store_artifacts:
+          path: htmlcov
+          destination: test-reports
