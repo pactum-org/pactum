@@ -2,6 +2,7 @@
 ## The HTTP-API specification sketchbook for pythonistas
 
 [![Circle CI](https://circleci.com/gh/pactum-org/pactum.svg?style=svg)](https://circleci.com/gh/pactum-org/pactum)
+[![Coverage Status](https://coveralls.io/repos/github/pactum-org/pactum/badge.svg?branch=master)](https://coveralls.io/github/pactum-org/pactum?branch=master)
 
 ```shell
 pip install pactum
@@ -153,3 +154,14 @@ pactum-openapi <spec_file.py> <output_file> [--format=<json or yaml>]
 - [ ] Support for Authorization and Authentication Specifications.
 - [ ] Support for extensions.
 - [ ] Behaviors
+
+
+# Thanks to
+
+* [@osantana](https://github.com/osantana)
+* [@eduardostalinho](https://github.com/eduardostalinho)
+* [@luizdepra](https://github.com/luizdepra)
+* [@rfunix](https://github.com/rfunix)
+* [@GuilhermeVBeira](https://github.com/GuilhermeVBeira)
+* [@wallacesilva](https://github.com/wallacesilva)
+* [@hartungstenio](https://github.com/hartungstenio)
