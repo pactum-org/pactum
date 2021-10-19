@@ -25,6 +25,7 @@ jobs:
       - run:
           name: run tests
           command: |
+            . ./venv/bin/activate
             pytest
             coveralls
       - store_artifacts:
