@@ -154,3 +154,14 @@ pactum-openapi <spec_file.py> <output_file> [--format=<json or yaml>]
 - [ ] Support for Authorization and Authentication Specifications.
 - [ ] Support for extensions.
 - [ ] Behaviors
+
+
+# Thanks to
+
+* [@osantana](https://github.com/osantana)
+* [@eduardostalinho](https://github.com/eduardostalinho)
+* [@luizdepra](https://github.com/luizdepra)
+* [@rfunix](https://github.com/rfunix)
+* [@GuilhermeVBeira](https://github.com/GuilhermeVBeira)
+* [@wallacesilva](https://github.com/wallacesilva)
+* [@hartungstenio](https://github.com/hartungstenio)
