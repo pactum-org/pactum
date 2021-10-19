@@ -16,14 +16,16 @@ jobs:
       - run:
           name: "Install dependencies"
           command: |
-            poetry self update
-            poetry install
+            python3 -m venv venv
+            . ./venv/bin/activate
+            pip install -U poetry coveralls pip setuptools
+            poetry install -n --no-ansi
 
       - save_cache:
           name: "Saving dependencies cache"
           key: v1-dependencies-{{ checksum "poetry.lock" }}
           paths:
-            - /home/circleci/.cache/pypoetry/virtualenvs
+            - ./venv
 
       - restore_cache:
           name: "Restoring hooks cache"
@@ -42,8 +44,9 @@ jobs:
       - run:
           name: "Running tests"
           command: |
-            poetry run pytest -vv -s --cov pactum --cov-report=html
-            poetry run coveralls
+            . ./venv/bin/activate
+            pytest -vv -s --cov pactum --cov-report=html
+            coveralls
 
       - store_artifacts:
           path: htmlcov
