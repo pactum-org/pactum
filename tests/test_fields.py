@@ -1,6 +1,13 @@
 import pytest
 
-from pactum.fields import DecimalField, Field, IntegerField, PositiveIntegerField, ResourceField, StringField
+from pactum.fields import (
+    DecimalField,
+    Field,
+    IntegerField,
+    PositiveIntegerField,
+    ResourceField,
+    StringField,
+)
 from pactum.resources import Resource
 
 
@@ -84,7 +91,10 @@ def test_string_field():
 
 
 def test_resource_field(resource):
-    resource_field = ResourceField(name='my_field', resource=resource)
+    resource_field = ResourceField(
+        name='my_field',
+        resource=resource,
+    )
 
     assert resource_field.type == ResourceField
     assert resource_field.name == 'my_field'

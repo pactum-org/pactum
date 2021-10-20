@@ -138,10 +138,14 @@ class OrdersAPI(API):
 
 api = OrdersAPI()
 ```
+
 Be happy and ready to export your specification to any format you want.
 
+
 # Exporting to openapi specs.
+
 Pactum has a command that exports your specification to OpenAPI. You can call it by using:
+
 ```
 pactum-openapi <spec_file.py> <output_file> [--format=<json or yaml>]
 ```

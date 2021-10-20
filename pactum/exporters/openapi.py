@@ -35,14 +35,14 @@ class OpenAPIV3Exporter(BaseVisitor):
 
     def visit_api(self, api):
         last_version = api.versions[-1]
-        self.result['info'] = {
+        self.result['info'].update({
             'title': api.name,  # REQUIRED
             'description': api.__doc__,
             'termsOfService': '',
             'contact': {},
             'license': {},
             'version': last_version.name,  # REQUIRED
-        }
+        })
         api.versions = [last_version]  # Versions override to visitonly children for last version.
 
     def visit_version(self, version):
@@ -84,12 +84,17 @@ class OpenAPIV3Exporter(BaseVisitor):
             result['parameters'].append(qs_dict)
 
     def _parameter_to_dict(self, action, parameter):
-        param_dict = {'name': parameter, 'in': 'path', 'required': True}
-        success_responses = [
-            response
-            for response in action.responses
-            if str(response.status).startswith('20') and isinstance(response.body, Resource)
-        ]
+        param_dict = {
+            'name': parameter,
+            'in': 'path',
+            'required': True
+        }
+
+        success_responses = []
+        for response in action.responses:
+            if str(response.status).startswith('20') and isinstance(response.body, Resource):
+                success_responses.append(response)
+
         if success_responses and isinstance(success_responses[0].body, Resource):
             response = success_responses[0]
             resource = response.body
@@ -132,7 +137,9 @@ class OpenAPIV3Exporter(BaseVisitor):
 
         if response.body:
             parsed_response['content'][content_type] = {
-                'schema': {'$ref': f'#/components/schemas/{response.body.name}'}
+                'schema': {
+                    '$ref': f'#/components/schemas/{response.body.name}'
+                }
             }
         method['responses'][str(response.status)] = parsed_response
 
