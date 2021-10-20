@@ -2,6 +2,11 @@ from .base import KeyValueElement
 
 
 class Field(KeyValueElement):
+    def __init__(self, nullable=False, blank=False, **kwargs):
+        super().__init__(**kwargs)
+        self.nullable = nullable
+        self.blank = blank
+
     def accept(self, visitor):
         visitor.visit_field(self)
 
@@ -40,13 +45,17 @@ class StringField(Field):
     pass
 
 
+class DateField(Field):
+    pass
+
+
 class TimestampField(Field):
     pass
 
 
 class ResourceField(Field):
-    def __init__(self, name=None, type=None, resource=None):
-        super().__init__(name, type)
+    def __init__(self, resource=None, **kwargs):
+        super().__init__(**kwargs)
         if resource is None:
             try:
                 resource = getattr(self, 'resource')

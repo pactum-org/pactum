@@ -14,6 +14,16 @@ def test_basic_field():
     assert field.type == 'type'
 
 
+def test_basic_field_defaults():
+    field = Field()
+
+    assert field.name == ''
+    assert field.type == Field
+    assert not field.required
+    assert not field.nullable
+    assert not field.blank
+
+
 def test_basic_field_class_definition():
     class TestField(Field):
         name = 'TestField'
