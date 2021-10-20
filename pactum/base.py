@@ -1,7 +1,7 @@
 class Element:
     _children_name = None
 
-    def __init__(self, parent=None, description=None, extensions=None, **kwargs):
+    def __init__(self, *, parent=None, description=None, extensions=None, **kwargs):
         self.parent = parent
 
         if description is None:
@@ -31,11 +31,8 @@ class Element:
 
 # noinspection PyShadowingBuiltins
 class KeyValueElement(Element):
-    def __init__(self, name=None, type=None, required=None, **kwargs):
+    def __init__(self, *, name=None, type=None, required=None, empty=None, **kwargs):
         super().__init__(**kwargs)
-        if required is None:
-            required = getattr(self, 'required', False)
-        self.required = required
 
         if name is None:
             name = getattr(self, 'name', '')
@@ -44,3 +41,11 @@ class KeyValueElement(Element):
         if type is None:
             type = getattr(self, 'type', self.__class__)
         self.type = type
+
+        if required is None:
+            required = getattr(self, 'required', True)
+        self.required = required
+
+        if empty is None:
+            empty = getattr(self, 'empty', False)
+        self.empty = empty

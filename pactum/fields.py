@@ -2,10 +2,15 @@ from .base import KeyValueElement
 
 
 class Field(KeyValueElement):
-    def __init__(self, nullable=False, blank=False, **kwargs):
+    def __init__(self, empty=None, nullable=None, **kwargs):
         super().__init__(**kwargs)
+
+        if empty is not None:
+            self.empty = empty
+
+        if nullable is None:
+            nullable = getattr(self, 'nullable', False)
         self.nullable = nullable
-        self.blank = blank
 
     def accept(self, visitor):
         visitor.visit_field(self)

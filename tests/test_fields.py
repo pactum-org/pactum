@@ -19,9 +19,9 @@ def test_basic_field_defaults():
 
     assert field.name == ''
     assert field.type == Field
-    assert not field.required
+    assert field.required
     assert not field.nullable
-    assert not field.blank
+    assert not field.empty
 
 
 def test_basic_field_class_definition():

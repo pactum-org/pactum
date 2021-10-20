@@ -128,7 +128,7 @@ def test_visit_action_populates_paths_verbs_with_parameters():
 
 def test_visit_action_populates_queries_with_route_qs():
     exporter = OpenAPIV3Exporter()
-    querystring = Querystring(name='limit', type=fields.IntegerField)
+    querystring = QueryString(name='limit', type=fields.IntegerField)
     route = Route(path='/test-path', querystrings=[querystring])
     request = Request(verb=verbs.GET)
     action = Action(request=request, responses=[], description='Testing action')
