@@ -4,8 +4,8 @@ from pactum import verbs
 from pactum.action import Action
 from pactum.api import API
 from pactum.querystring import Querystring
-from pactum.resources import Resource
 from pactum.request import Request
+from pactum.resources import Resource
 from pactum.response import Response
 from pactum.route import Route
 from pactum.version import Version
@@ -19,7 +19,7 @@ def route(resource):
 @pytest.fixture
 def version(route):
     return Version(
-        name="v0",
+        name='v0',
         routes=[
             route,
         ],
@@ -29,7 +29,7 @@ def version(route):
 @pytest.fixture
 def api():
     api = API(
-        name="Test API",
+        name='Test API',
         versions=[],
     )
     return api

@@ -1,10 +1,20 @@
-import pytest
 from copy import copy
 
-from pactum import Action, API, fields
-from pactum import ListResource, Querystring
-from pactum import Resource, Response, Request, Route
-from pactum import Version, verbs
+import pytest
+
+from pactum import (
+    API,
+    Action,
+    ListResource,
+    Querystring,
+    Request,
+    Resource,
+    Response,
+    Route,
+    Version,
+    fields,
+    verbs,
+)
 from pactum.exporters.openapi import NotSpecified, OpenAPIV3Exporter
 
 
@@ -23,10 +33,7 @@ def test_visit_api_for_api_with_versions_overrides_versions():
     exporter = OpenAPIV3Exporter()
     v1 = Version(name='v1', routes=[])
     v2 = Version(name='v2', routes=[])
-    api = API(
-        name='Test API', versions=[v1, v2],
-        description='API for tests.'
-    )
+    api = API(name='Test API', versions=[v1, v2], description='API for tests.')
 
     exporter.visit_api(api)
 
@@ -111,7 +118,7 @@ def test_visit_action_populates_paths_verbs_with_parameters():
     assert parsed_action['parameters'][0] == {
         'name': 'code',
         'in': 'path',
-        'required': True
+        'required': True,
     }
     assert parsed_action['responses'] == {}
     assert parsed_action['callbacks'] == []
@@ -152,9 +159,7 @@ def test_visit_request_populates_request_body_with_payload_reference(resource):
     action = Action(request=request, responses=[])
     action.parent = route
 
-    exporter.result['paths'] = {
-        '/test-path/': {'get': {}}
-    }
+    exporter.result['paths'] = {'/test-path/': {'get': {}}}
 
     exporter.visit_request(request)
 
@@ -168,18 +173,15 @@ def test_visit_response_appends_response_objects_to_path(resource):
     route = Route(path='/test-path/')
     request = Request(verb=verbs.GET)
     response = Response(
-        status=200, description='Response for testing',
+        status=200,
+        description='Response for testing',
         headers=[('content-type', 'application/json')],
-        body=resource
+        body=resource,
     )
-    action = Action(
-        request=request, responses=[response]
-    )
+    action = Action(request=request, responses=[response])
     action.parent = route
 
-    exporter.result['paths'] = {
-        '/test-path/': {'get': {'responses': {}}}
-    }
+    exporter.result['paths'] = {'/test-path/': {'get': {'responses': {}}}}
 
     exporter.visit_response(response)
 
@@ -243,9 +245,7 @@ def test_visit_field_populates_component_schema_with_field_type():
     TestResource()
 
     exporter = OpenAPIV3Exporter()
-    exporter.result['components']['schemas'] = {
-        'TestResource': {'properties': {}}
-    }
+    exporter.result['components']['schemas'] = {'TestResource': {'properties': {}}}
 
     exporter.visit_field(code_field)
 
@@ -266,9 +266,7 @@ def test_resource_field_visit_populated_with_resource_reference():
     TestResource()
 
     exporter = OpenAPIV3Exporter()
-    exporter.result['components']['schemas'] = {
-        'TestResource': {'properties': {}}
-    }
+    exporter.result['components']['schemas'] = {'TestResource': {'properties': {}}}
 
     exporter.visit_field(resource_field)
 
@@ -280,6 +278,7 @@ def test_resource_field_visit_populated_with_resource_reference():
 def test_custom_field_with_extension():
     class CustomField(fields.Field):
         extensions = {'openapi.type': 'custom'}
+
     custom_field = CustomField(name='test_name')
 
     class TestResource(Resource):
@@ -288,9 +287,7 @@ def test_custom_field_with_extension():
     TestResource()
 
     exporter = OpenAPIV3Exporter()
-    exporter.result['components']['schemas'] = {
-        'TestResource': {'properties': {}}
-    }
+    exporter.result['components']['schemas'] = {'TestResource': {'properties': {}}}
     exporter.visit_field(custom_field)
 
     properties = exporter.result['components']['schemas']['TestResource']['properties']
@@ -301,6 +298,7 @@ def test_custom_field_with_extension():
 def test_visit_for_custom_field_without_extension_raises_error():
     class CustomField(fields.Field):
         pass
+
     custom_field = CustomField()
 
     class TestResource(Resource):
@@ -308,9 +306,7 @@ def test_visit_for_custom_field_without_extension_raises_error():
 
     TestResource()
     exporter = OpenAPIV3Exporter()
-    exporter.result['components']['schemas'] = {
-        'TestResource': {'properties': {}}
-    }
+    exporter.result['components']['schemas'] = {'TestResource': {'properties': {}}}
 
     with pytest.raises(NotSpecified):
         exporter.visit_field(custom_field)

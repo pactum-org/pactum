@@ -8,10 +8,11 @@ class Notification(Behavior):
 
         if target is None:
             try:
-                target = getattr(self, "target")
+                target = getattr(self, 'target')
             except AttributeError:
-                raise TypeError("Missing target specification.")
+                raise TypeError('Missing target specification.')
         self.target = target
+
 
 # TODO: Behaviors
 # Notification Behavior

@@ -13,7 +13,7 @@ class Version(Element):
             try:
                 routes = getattr(self.__class__, 'routes')
             except AttributeError:
-                raise TypeError("Version must have routes.")
+                raise TypeError('Version must have routes.')
 
         actions = set()
         for route in routes:

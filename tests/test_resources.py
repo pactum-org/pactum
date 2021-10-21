@@ -6,24 +6,24 @@ from pactum.resources import ListResource, Resource
 
 def test_basic_resource():
     resource = Resource(
-        name="TestResource",
+        name='TestResource',
         fields=[],
         behaviors=[],
     )
 
-    assert resource.name == "TestResource"
+    assert resource.name == 'TestResource'
     assert len(resource.fields) == 0
     assert len(resource.behaviors) == 0
 
 
 def test_basic_resource_class_definition():
     class TestResource(Resource):
-        name = "TestResource"
+        name = 'TestResource'
         fields = []
         behaviors = []
 
     resource = TestResource()
-    assert resource.name == "TestResource"
+    assert resource.name == 'TestResource'
     assert len(resource.fields) == 0
     assert len(resource.behaviors) == 0
 
@@ -34,7 +34,7 @@ def test_basic_resource_class_definition_with_class_name():
         behaviors = []
 
     resource = MyResource()
-    assert resource.name == "MyResource"
+    assert resource.name == 'MyResource'
     assert len(resource.fields) == 0
     assert len(resource.behaviors) == 0
 
@@ -45,7 +45,7 @@ def test_basic_resource_class_definition_with_inner_class_fields():
             pass
 
     resource = MyResource()
-    assert resource.name == "MyResource"
+    assert resource.name == 'MyResource'
     assert len(resource.fields) == 0
 
 
@@ -90,10 +90,7 @@ def test_access_fields_mixed_list_and_in_inner_class_definition():
 
 def test_access_fields_by_key():
     class MyResource(Resource):
-        fields = [
-            Field(name='my_field'),
-            Field(name='my_other_field')
-        ]
+        fields = [Field(name='my_field'), Field(name='my_other_field')]
 
     resource = MyResource()
 
@@ -109,10 +106,7 @@ def test_access_fields_by_key():
 
 def test_duplicate_field_names_raises_error():
     class MyResource(Resource):
-        fields = [
-            Field(name='my_field'),
-            Field(name='my_field')
-        ]
+        fields = [Field(name='my_field'), Field(name='my_field')]
 
     with pytest.raises(ValueError):
         MyResource()
@@ -147,9 +141,7 @@ def test_subclassing_add_fields():
         ]
 
     class MySubResource(MyResource):
-        fields = MyResource.fields + [
-            Field(name='my_other_field')
-        ]
+        fields = MyResource.fields + [Field(name='my_other_field')]
 
     resource = MySubResource()
 
@@ -181,7 +173,7 @@ def test_subclassing_add_fields_using_class_definition():
 def test_basic_list_resource(resource):
     list_resource = ListResource(resource=resource)
 
-    assert list_resource.name == "ListResource"
+    assert list_resource.name == 'ListResource'
     assert list_resource.resource == resource
 
     assert hasattr(list_resource, 'fields') is False
@@ -192,12 +184,12 @@ def test_basic_list_resource_class_definition(resource):
     base_resource = resource
 
     class MyListResource(ListResource):
-        name = "ListResource"
+        name = 'ListResource'
         resource = base_resource
 
     list_resource = MyListResource()
 
-    assert list_resource.name == "ListResource"
+    assert list_resource.name == 'ListResource'
     assert list_resource.resource == resource
 
     assert hasattr(list_resource, 'fields') is False
@@ -206,4 +198,4 @@ def test_basic_list_resource_class_definition(resource):
 
 def test_fail_list_resource_with_no_resource():
     with pytest.raises(TypeError):
-        ListResource(name="ListResource")
+        ListResource(name='ListResource')

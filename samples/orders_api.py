@@ -13,12 +13,12 @@ class MoneyField(fields.DecimalField):
 
 class ItemResource(pactum.Resource):
     fields = [
-        fields.IntegerField(name="id"),
-        fields.PositiveIntegerField(name="quantity"),
-        SKUField(name="sku"),
-        fields.StringField(name="description"),
-        MoneyField(name="price", precision=2),
-        MoneyField(name="total", precision=2),
+        fields.IntegerField(name='id'),
+        fields.PositiveIntegerField(name='quantity'),
+        SKUField(name='sku'),
+        fields.StringField(name='description'),
+        MoneyField(name='price', precision=2),
+        MoneyField(name='total', precision=2),
     ]
 
 
@@ -28,10 +28,10 @@ class ItemListResource(pactum.ListResource):
 
 class OrderResource(pactum.Resource):
     fields = [
-        fields.StringField(name="code"),
-        fields.TimestampField(name="created_at"),
-        fields.ResourceField(name="items", resource=ItemListResource()),
-        MoneyField(name="total"),
+        fields.StringField(name='code'),
+        fields.TimestampField(name='created_at'),
+        fields.ResourceField(name='items', resource=ItemListResource()),
+        MoneyField(name='total'),
     ]
 
 
@@ -43,51 +43,43 @@ class OrderListResource(pactum.ListResource):
 
 
 class OrderListRoute(pactum.Route):
-    path = "/orders"
+    path = '/orders'
     actions = [
         pactum.Action(
             request=pactum.Request(verb=verbs.GET),
-            responses=[
-                pactum.Response(
-                    status=200,
-                    body=OrderListResource()
-                )
-            ],
-            description='List Orders'
+            responses=[pactum.Response(status=200, body=OrderListResource())],
+            description='List Orders',
         )
     ]
     querystrings = [
         pactum.Querystring(
-            name='limit', type=fields.IntegerField,
-            description='Limits the number of order in the response'
+            name='limit',
+            type=fields.IntegerField,
+            description='Limits the number of order in the response',
         ),
     ]
 
 
 class OrderDetailRoute(pactum.Route):
-    path = "/order/{code}"
+    path = '/order/{code}'
     actions = [
         pactum.Action(
             request=pactum.Request(verb=verbs.GET),
-            responses=[
-                pactum.Response(
-                    status=200,
-                    body=order_resource)
-            ],
-            description='Retrieve order by code.'
+            responses=[pactum.Response(status=200, body=order_resource)],
+            description='Retrieve order by code.',
         )
     ]
 
 
 api = pactum.API(
-    name="Orders API",
+    name='Orders API',
     versions=[
         pactum.Version(
-            name="v1",
+            name='v1',
             routes=[
                 OrderListRoute(),
                 OrderDetailRoute(),
-            ]
+            ],
         )
-    ]
+    ],
 )

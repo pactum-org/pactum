@@ -1,7 +1,18 @@
 import pytest
 
-from pactum import fields, verbs
-from pactum import API, Version, Route, Action, Request, Response, Querystring, Resource, ListResource
+from pactum import (
+    API,
+    Action,
+    ListResource,
+    Querystring,
+    Request,
+    Resource,
+    Response,
+    Route,
+    Version,
+    fields,
+    verbs,
+)
 from pactum.visitor import BaseVisitor
 
 
@@ -79,7 +90,7 @@ def test_visitor_route_call_with_querystring(visitor):
     route = Route(
         path='/test',
         actions=[Action(responses=[])],
-        querystrings=[Querystring(name='test_qs')]
+        querystrings=[Querystring(name='test_qs')],
     )
     route.accept(visitor)
 

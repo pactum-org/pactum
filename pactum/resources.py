@@ -4,7 +4,7 @@ from pactum.fields import Field
 class BaseResource:
     def __init__(self, name=None):
         if name is None:
-            name = getattr(self, "name", self.__class__.__name__)
+            name = getattr(self, 'name', self.__class__.__name__)
         self.name = name
 
 
@@ -17,17 +17,17 @@ class Resource(BaseResource):
         self._load_fields(fields)
 
         if behaviors is None:
-            behaviors = getattr(self, "behavior", [])
+            behaviors = getattr(self, 'behavior', [])
         self.behaviors = behaviors
 
     def _load_fields(self, fields):
         if fields is None:
-            fields = getattr(self.__class__, "fields", [])
+            fields = getattr(self.__class__, 'fields', [])
 
         for field in fields:
             self._add_field(field.name, field)
 
-        field_class = getattr(self.__class__, "Fields", None)
+        field_class = getattr(self.__class__, 'Fields', None)
 
         if not field_class:
             return fields
@@ -39,7 +39,7 @@ class Resource(BaseResource):
                 continue
 
             if field.name and field.name != name:
-                raise ValueError("Cannot specify a different name to fields")
+                raise ValueError('Cannot specify a different name to fields')
 
             self._add_field(name, field)
 
@@ -47,7 +47,7 @@ class Resource(BaseResource):
 
     def _add_field(self, name, field):
         if self._mapfields.get(name):
-            raise ValueError("Duplicate field names")
+            raise ValueError('Duplicate field names')
 
         self.fields.append(field)
         self._mapfields[name] = field
@@ -69,9 +69,9 @@ class ListResource(BaseResource):
 
         if resource is None:
             try:
-                resource = getattr(self, "resource")
+                resource = getattr(self, 'resource')
             except AttributeError:
-                raise TypeError("Missing resource specification.")
+                raise TypeError('Missing resource specification.')
 
         self.resource = resource
 

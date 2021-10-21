@@ -28,13 +28,10 @@ def test_prefer_parameter_to_class_definition(action):
         path = '/test/'
         actions = []
 
-    route = TestRoute(
-        path="/test_by_param/",
-        actions=[action]
-    )
+    route = TestRoute(path='/test_by_param/', actions=[action])
 
     assert len(route.actions) == 1
-    assert route.path == "/test_by_param/"
+    assert route.path == '/test_by_param/'
     assert route.actions[0].parent == route
 
 

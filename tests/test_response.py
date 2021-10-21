@@ -1,4 +1,5 @@
 import pytest
+
 from pactum.response import Response
 
 
@@ -35,6 +36,7 @@ def test_response_is_invalid_without_status():
 def test_response_class_definition_with_doc_description(version):
     class TestResponse(Response):
         """Response for tests."""
+
         body = None
         headers = []
         status = 200
@@ -44,4 +46,4 @@ def test_response_class_definition_with_doc_description(version):
     assert response.body is None
     assert response.headers == []
     assert response.status == 200
-    assert response.__doc__ == "Response for tests."
+    assert response.__doc__ == 'Response for tests.'

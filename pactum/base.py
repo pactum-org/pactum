@@ -12,7 +12,8 @@ class Element:
             extensions = getattr(self, 'extensions', {})
         self.extensions = extensions
 
-    def _initialize_children(self, attrs):  # TODO: refactor this to use kwargs and remove locals() references on caller
+    # TODO: refactor this to use kwargs and remove locals() references on caller
+    def _initialize_children(self, attrs):
         setattr(self, self._children_name, [])
 
         children = attrs.get(self._children_name)

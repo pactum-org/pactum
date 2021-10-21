@@ -1,6 +1,6 @@
 from pactum import fields
-from pactum.visitor import BaseVisitor
 from pactum.resources import Resource
+from pactum.visitor import BaseVisitor
 
 FIELD_TYPES_MAP = {
     fields.IntegerField: 'integer',
@@ -15,10 +15,11 @@ class NotSpecified(Exception):
 
 
 class OpenAPIV3Exporter(BaseVisitor):
-    '''
+    """
     Exporter based on OpenAPI specification version 3.0.1.
     https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md
-    '''
+    """
+
     OPENAPI_VERSION = '3.0.1'
 
     def __init__(self):
@@ -29,7 +30,7 @@ class OpenAPIV3Exporter(BaseVisitor):
             'paths': {},  # REQUIRED
             'components': {'schemas': {}},
             'security': {},
-            'tags': {}
+            'tags': {},
         }
 
     def visit_api(self, api):
@@ -83,35 +84,29 @@ class OpenAPIV3Exporter(BaseVisitor):
             result['parameters'].append(qs_dict)
 
     def _parameter_to_dict(self, action, parameter):
-        param_dict = ({
-            'name': parameter,
-            'in': 'path',
-            'required': True
-        })
+        param_dict = {'name': parameter, 'in': 'path', 'required': True}
         success_responses = [
-            response for response in action.responses if str(response.status).startswith('20') and isinstance(response.body, Resource)
+            response
+            for response in action.responses
+            if str(response.status).startswith('20') and isinstance(response.body, Resource)
         ]
         if success_responses and isinstance(success_responses[0].body, Resource):
             response = success_responses[0]
             resource = response.body
             field = resource[parameter]
-            param_dict['schema'] = {
-                '$ref': f'#/components/schemas/{resource.name}/properties/{field.name}'
-            }
+            param_dict['schema'] = {'$ref': f'#/components/schemas/{resource.name}/properties/{field.name}'}
 
         return param_dict
 
     def _querystring_to_dict(self, querystring):
-        qs_dict = ({
+        qs_dict = {
             'name': querystring.name,
             'in': 'query',
             'required': querystring.required,
             'description': querystring.__doc__,
-        })
+        }
         if issubclass(querystring.type, fields.Field):
-            qs_dict['schema'] = {
-                'type': self._map_field_type(querystring)
-            }
+            qs_dict['schema'] = {'type': self._map_field_type(querystring)}
         return qs_dict
 
     def visit_request(self, request):
@@ -125,7 +120,7 @@ class OpenAPIV3Exporter(BaseVisitor):
         parsed_response = {
             'description': response.__doc__,
             'links': {},
-            'content': {}
+            'content': {},
         }
 
         headers = dict(response.headers)
@@ -136,19 +131,22 @@ class OpenAPIV3Exporter(BaseVisitor):
             content_type = 'application/json'
 
         if response.body:
-            parsed_response['content'][content_type] = {'schema': {'$ref': f'#/components/schemas/{response.body.name}'}}
+            parsed_response['content'][content_type] = {
+                'schema': {'$ref': f'#/components/schemas/{response.body.name}'}
+            }
         method['responses'][str(response.status)] = parsed_response
 
     def visit_resource(self, resource):
         self.result['components']['schemas'][resource.name] = {
             'type': 'object',
             'required': [field.name for field in resource.fields if field.required],
-            'properties': {}
+            'properties': {},
         }
 
     def visit_list_resource(self, list_resource):
         self.result['components']['schemas'][list_resource.name] = {
-            'type': 'array', 'items': {'$ref': f'#/components/schemas/{list_resource.resource.name}'}
+            'type': 'array',
+            'items': {'$ref': f'#/components/schemas/{list_resource.resource.name}'},
         }
 
     def _map_field_type(self, element):
@@ -164,7 +162,7 @@ class OpenAPIV3Exporter(BaseVisitor):
         else:
             type_ = self._map_field_type(field)
 
-            obj['properties'][field.name] = {"type": type_}
+            obj['properties'][field.name] = {'type': type_}
 
             if getattr(field, 'min_value', None) is not None:
                 obj['properties'][field.name]['minimum'] = field.min_value

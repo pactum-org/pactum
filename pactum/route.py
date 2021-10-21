@@ -1,4 +1,5 @@
 import re
+
 from .base import Element
 
 
@@ -11,7 +12,7 @@ class Route(Element):
             try:
                 path = getattr(self, 'path')
             except AttributeError:
-                raise TypeError("Missing path specification.")
+                raise TypeError('Missing path specification.')
         self.path = path
 
         if querystrings is None:

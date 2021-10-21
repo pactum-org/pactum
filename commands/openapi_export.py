@@ -3,6 +3,7 @@ import json
 
 import click
 import yaml
+
 from pactum.exporters.openapi import OpenAPIV3Exporter
 
 
