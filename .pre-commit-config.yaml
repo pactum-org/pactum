@@ -1,6 +1,6 @@
 repos:
 -   repo: git@github.com:pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
     - id: debug-statements
     - id: trailing-whitespace
@@ -23,6 +23,17 @@ repos:
   hooks:
     - id: flake8
       args: ['--exclude=docs/*,*migrations*', '--ignore=E501,W503,E203']
+
+- repo: https://github.com/timothycrosley/isort
+  rev: 5.9.3
+  hooks:
+    - id: isort
+
+- repo: https://github.com/grantjenks/blue
+  rev: v0.7.0
+  hooks:
+    - id: blue
+      args: ['--check', '--diff']
 
 - repo: local
   hooks:
