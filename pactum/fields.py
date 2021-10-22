@@ -3,10 +3,7 @@ from .base import KeyValueElement
 
 class Field(KeyValueElement):
     def __init__(self, empty=None, nullable=None, **kwargs):
-        super().__init__(**kwargs)
-
-        if empty is not None:
-            self.empty = empty
+        super().__init__(empty=empty, **kwargs)
 
         if nullable is None:
             nullable = getattr(self, 'nullable', False)
