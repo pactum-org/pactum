@@ -4,7 +4,7 @@ from pactum import (
     API,
     Action,
     ListResource,
-    Querystring,
+    QueryString,
     Request,
     Resource,
     Response,
@@ -91,13 +91,7 @@ def test_visitor_route_call_with_querystring(visitor):
     route = Route(
         path='/test',
         actions=[Action(responses=[])],
-<<<<<<< HEAD
-        querystrings=[Querystring(name='test_qs')],
-||||||| parent of 1e89ab8 (Refactor and fix some modeling issues)
-        querystrings=[Querystring(name='test_qs')]
-=======
-        querystrings=[QueryString(name='test_qs')]
->>>>>>> 1e89ab8 (Refactor and fix some modeling issues)
+        querystrings=[QueryString(name='test_qs')],
     )
     route.accept(visitor)
 
