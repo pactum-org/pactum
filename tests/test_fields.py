@@ -1,13 +1,6 @@
 import pytest
 
-from pactum.fields import (
-    DecimalField,
-    Field,
-    IntegerField,
-    PositiveIntegerField,
-    ResourceField,
-    StringField,
-)
+from pactum.fields import DecimalField, Field, IntegerField, PositiveIntegerField, ResourceField, StringField
 from pactum.resources import Resource
 
 
