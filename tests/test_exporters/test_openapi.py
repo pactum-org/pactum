@@ -6,7 +6,7 @@ from pactum import (
     API,
     Action,
     ListResource,
-    Querystring,
+    QueryString,
     Request,
     Resource,
     Response,
