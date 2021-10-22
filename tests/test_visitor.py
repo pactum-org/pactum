@@ -13,6 +13,7 @@ from pactum import (
     fields,
     verbs,
 )
+from pactum.base import Element
 from pactum.visitor import BaseVisitor
 
 
@@ -178,3 +179,26 @@ def test_visitor_querystring_call(visitor):
     assert visitor.blueprints == [
         'querystring visited',
     ]
+
+
+@pytest.mark.parametrize(
+    'visitor_name',
+    [
+        'visit_field',
+        'visit_api',
+        'visit_version',
+        'visit_route',
+        'visit_action',
+        'visit_querystring',
+        'visit_request',
+        'visit_response',
+        'visit_resource',
+        'visit_field',
+        'visit_list_resource',
+    ],
+)
+def test_abstract_base_visitor(visitor_name):
+    visitor = BaseVisitor()
+    node = Element()
+    with pytest.raises(NotImplementedError):
+        getattr(visitor, visitor_name)(node)
