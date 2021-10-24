@@ -40,10 +40,7 @@ class KeyValueElement(Element):
         self.empty = self._config_default(empty=empty, default=False)
 
     def _config_default(self, *, default=None, **kwargs):
-        try:
-            attr, value = kwargs.popitem()
-        except KeyError:
-            return default
+        attr, value = kwargs.popitem()
 
         if value is not None:
             return value
