@@ -29,6 +29,7 @@ class Element:
         child.parent = self
 
 
+# noinspection PyShadowingBuiltins
 class KeyValueElement(Element):
     def __init__(self, name=None, type=None, required=None, **kwargs):
         super().__init__(**kwargs)

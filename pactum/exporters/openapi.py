@@ -35,14 +35,16 @@ class OpenAPIV3Exporter(BaseVisitor):
 
     def visit_api(self, api):
         last_version = api.versions[-1]
-        self.result['info'] = {
-            'title': api.name,  # REQUIRED
-            'description': api.__doc__,
-            'termsOfService': '',
-            'contact': {},
-            'license': {},
-            'version': last_version.name,  # REQUIRED
-        }
+        self.result['info'].update(
+            {
+                'title': api.name,  # REQUIRED
+                'description': api.__doc__,
+                'termsOfService': '',
+                'contact': {},
+                'license': {},
+                'version': last_version.name,  # REQUIRED
+            }
+        )
         api.versions = [last_version]  # Versions override to visitonly children for last version.
 
     def visit_version(self, version):
@@ -84,17 +86,24 @@ class OpenAPIV3Exporter(BaseVisitor):
             result['parameters'].append(qs_dict)
 
     def _parameter_to_dict(self, action, parameter):
-        param_dict = {'name': parameter, 'in': 'path', 'required': True}
-        success_responses = [
-            response
-            for response in action.responses
-            if str(response.status).startswith('20') and isinstance(response.body, Resource)
-        ]
+        param_dict = {
+            'name': parameter,
+            'in': 'path',
+            'required': True,
+        }
+
+        success_responses = []
+        for response in action.responses:
+            if str(response.status).startswith('20') and isinstance(response.body, Resource):
+                success_responses.append(response)
+
         if success_responses and isinstance(success_responses[0].body, Resource):
             response = success_responses[0]
             resource = response.body
             field = resource[parameter]
-            param_dict['schema'] = {'$ref': f'#/components/schemas/{resource.name}/properties/{field.name}'}
+            param_dict['schema'] = {
+                '$ref': f'#/components/schemas/{resource.name}/properties/{field.name}',
+            }
 
         return param_dict
 
@@ -112,7 +121,11 @@ class OpenAPIV3Exporter(BaseVisitor):
     def visit_request(self, request):
         payload = {}
         if request.payload:
-            payload = {'schema': {'$ref': f'#/components/schemas/{request.payload.name}'}}
+            payload = {
+                'schema': {
+                    '$ref': f'#/components/schemas/{request.payload.name}',
+                },
+            }
         self.result['paths'][request.parent.parent.path][request.verb.lower()]['requestBody'] = payload
 
     def visit_response(self, response):
@@ -132,7 +145,9 @@ class OpenAPIV3Exporter(BaseVisitor):
 
         if response.body:
             parsed_response['content'][content_type] = {
-                'schema': {'$ref': f'#/components/schemas/{response.body.name}'}
+                'schema': {
+                    '$ref': f'#/components/schemas/{response.body.name}',
+                }
             }
         method['responses'][str(response.status)] = parsed_response
 
@@ -146,7 +161,9 @@ class OpenAPIV3Exporter(BaseVisitor):
     def visit_list_resource(self, list_resource):
         self.result['components']['schemas'][list_resource.name] = {
             'type': 'array',
-            'items': {'$ref': f'#/components/schemas/{list_resource.resource.name}'},
+            'items': {
+                '$ref': f'#/components/schemas/{list_resource.resource.name}',
+            },
         }
 
     def _map_field_type(self, element):
@@ -158,7 +175,9 @@ class OpenAPIV3Exporter(BaseVisitor):
     def visit_field(self, field):
         obj = self.result['components']['schemas'][field.parent.name]
         if field.type == fields.ResourceField:
-            obj['properties'][field.name] = {'$ref': f'#/components/schemas/{field.resource.name}'}
+            obj['properties'][field.name] = {
+                '$ref': f'#/components/schemas/{field.resource.name}',
+            }
         else:
             type_ = self._map_field_type(field)
 

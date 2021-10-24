@@ -84,7 +84,10 @@ def test_string_field():
 
 
 def test_resource_field(resource):
-    resource_field = ResourceField(name='my_field', resource=resource)
+    resource_field = ResourceField(
+        name='my_field',
+        resource=resource,
+    )
 
     assert resource_field.type == ResourceField
     assert resource_field.name == 'my_field'
