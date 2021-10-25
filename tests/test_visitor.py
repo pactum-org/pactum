@@ -4,7 +4,7 @@ from pactum import (
     API,
     Action,
     ListResource,
-    Querystring,
+    QueryString,
     Request,
     Resource,
     Response,
@@ -91,7 +91,7 @@ def test_visitor_route_call_with_querystring(visitor):
     route = Route(
         path='/test',
         actions=[Action(responses=[])],
-        querystrings=[Querystring(name='test_qs')],
+        querystrings=[QueryString(name='test_qs')],
     )
     route.accept(visitor)
 
@@ -173,7 +173,7 @@ def test_visitor_resource_field_call(visitor):
 
 
 def test_visitor_querystring_call(visitor):
-    querystring = Querystring()
+    querystring = QueryString()
     querystring.accept(visitor)
 
     assert visitor.blueprints == [
